@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Select Algorithm Type</title>
+<script>
+    function handleAlgorithmSelection(current) {
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            if (checkbox !== current) {
+            checkbox.checked = false;
+            }
+        });
+
+        if (current.checked) {
+            const postUrl = '{% url "algorithms:receive_alg" %}';
+            const csrfToken = getCookie('csrftoken');  // Get the CSRF token from cookies
+
+            fetch(postUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken  // Include the CSRF token in the request headers
+            },
+            body: JSON.stringify({
+                algorithm: current.value
+            })
+            })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+            }
+        }
+        return cookieValue;
+    }
+
+</script>
+  
+</head>
+<body>
+<form>
+    {% csrf_token %} <!-- genereates the token on server and adds to browser cookies -->
+  
+    
+      <input type="checkbox" id="algorithm1" name="algorithm" value="algorithm1" onchange="handleAlgorithmSelection(this)">
+      <label for="algorithm1">Algorithm 1</label>
+    
+    
+      <input type="checkbox" id="algorithm2" name="algorithm" value="algorithm2" onchange="handleAlgorithmSelection(this)">
+      <label for="algorithm2">Algorithm 2</label>
+    
+    
+      <input type="checkbox" id="algorithm3" name="algorithm" value="algorithm3" onchange="handleAlgorithmSelection(this)">
+      <label for="algorithm3">Algorithm 3</label>
+    
+    
+      <input type="checkbox" id="algorithm4" name="algorithm" value="algorithm4" onchange="handleAlgorithmSelection(this)">
+      <label for="algorithm4">Algorithm 4</label>
+    
+  
+</form>
+</body>
+</html>
