@@ -1,12 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+<style>
+    textarea {
+        width: 600px;   /* Width of the text area */
+        height: 200px;  /* Height of the text area */
+        font-size: 16px; /* Font size inside the text area */
+    }
+</style>
+
 <head>
 <meta charset="UTF-8">
 <title>Select Algorithm Type</title>
 <script>
-    function handleAlgorithmSelection(current) {
+    function handleAlgorithmTypeSelection(current) {
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
             if (checkbox !== current) {
+            checkbox.checked = false;
+            }
+        });
+
+        document.getElementById('algInput').value = '';  
+
+        if (current.checked) {
+            const postUrl = '{% url "algorithms:receive_alg_type" %}';
+            const csrfToken = getCookie('csrftoken');  // Get the CSRF token from cookies
+
+            fetch(postUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken  // Include the CSRF token in the request headers
+            },
+            body: JSON.stringify({
+                algorithm_type: current.value
+            })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('input_type').value = data.input_type;
+                console.log(data);
+                updateFormWithAlgorithms(data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function handleAlgorithmSelection(current) {
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            if ((checkbox !== current) && (checkbox.name === 'algorithm')) {
             checkbox.checked = false;
             }
         });
@@ -26,9 +67,38 @@
             })
             })
             .then(response => response.json())
-            .then(data => console.log('Success:', data))
+            .then(data => {
+                document.getElementById('algInput').value = data.algorithm;
+                console.log(data);
+                
+            })
             .catch(error => console.error('Error:', error));
-        }
+        } 
+    }
+
+    function handleCodeSubmission(event) {
+        event.preventDefault();
+
+        const textareaValue = document.getElementById('algInput').value;
+        const postUrl = '{% url "algorithms:send_alg" %}';
+        const csrfToken = getCookie('csrftoken'); 
+
+        fetch(postUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken
+            },
+            body: JSON.stringify({
+                alg_code: textareaValue
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => console.error('Error:', error));
+
     }
 
     function getCookie(name) {
@@ -46,30 +116,63 @@
         return cookieValue;
     }
 
+    function updateFormWithAlgorithms(data) {
+        const form = document.getElementById('algorithmForm');
+
+        // Clear previous contents (useful for updates or re-fetches)
+        form.innerHTML = '';
+
+        // Iterate through the algorithms array in the data
+        data.algorithms.forEach(algorithm => {
+            // Create a checkbox for each algorithm
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = algorithm;
+            checkbox.name = 'algorithm';
+            checkbox.value = algorithm;
+            checkbox.onchange = function() { handleAlgorithmSelection(this); };
+
+            // Create a label for each checkbox
+            const label = document.createElement('label');
+            label.htmlFor = algorithm;
+            label.textContent = algorithm;  // Set the text of the label to the algorithm name
+
+            // Append the checkbox and label to the form
+            form.appendChild(checkbox);
+            form.appendChild(label);
+        });
+    }
 </script>
   
 </head>
 <body>
 <form>
-    {% csrf_token %} <!-- genereates the token on server and adds to browser cookies -->
+    {% csrf_token %} <!-- generates the token on server and adds to browser cookies -->
   
+    {% for alg_type in algorithm_types %}
+      <input type="checkbox" id="{{alg_type}}" name="algorithm_type" value="{{alg_type}}" onchange="handleAlgorithmTypeSelection(this)">
+      <label for="{{alg_type}}">{{alg_type}}</label>
     
-      <input type="checkbox" id="algorithm1" name="algorithm" value="algorithm1" onchange="handleAlgorithmSelection(this)">
-      <label for="algorithm1">Algorithm 1</label>
-    
-    
-      <input type="checkbox" id="algorithm2" name="algorithm" value="algorithm2" onchange="handleAlgorithmSelection(this)">
-      <label for="algorithm2">Algorithm 2</label>
-    
-    
-      <input type="checkbox" id="algorithm3" name="algorithm" value="algorithm3" onchange="handleAlgorithmSelection(this)">
-      <label for="algorithm3">Algorithm 3</label>
-    
-    
-      <input type="checkbox" id="algorithm4" name="algorithm" value="algorithm4" onchange="handleAlgorithmSelection(this)">
-      <label for="algorithm4">Algorithm 4</label>
-    
-  
+    {% endfor %}
 </form>
+<form id="inputType">
+    <!-- Dropdown field -->
+    <label for="input_type">Input Type:</label>
+    <select id="input_type" name="input_type" required>
+        <option value=""></option>
+        <option value="list">List</option>
+        <!-- Add more options as needed -->
+    </select>
+</form>
+
+<form id="algorithmForm">
+    <!-- Dynamically filled checkboxes will go here -->
+</form>
+
+<form>
+    <textarea id="algInput" name="algInput"></textarea>
+    <button type="submit" onclick="handleCodeSubmission(event)">Analyze</button>
+</form>
+
 </body>
 </html>
