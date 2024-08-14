@@ -10,4 +10,5 @@ urlpatterns = [
     path('receive_alg_type/', views.receive_alg_type, name='receive_alg_type'),
     path('receive_alg/', views.receive_alg, name='receive_alg'),
     path('send_alg/', views.send_alg, name='send_alg'),
+    
 ]

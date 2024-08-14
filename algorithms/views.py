@@ -48,11 +48,15 @@ def send_alg(request):
         try:
             data = json.loads(request.body.decode('utf-8'))
             algorithm = data.get('alg_code')
+            input_type = data.get('input_type')
             algorithm = alg_processing.get_function_object(algorithm)
-            print(algorithm([3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5]))
-            return JsonResponse({'result': 'success'})
-        except json.JSONDecodeError:
-            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+            if type(algorithm) == type('string'):
+                return JsonResponse({'error': algorithm}, status=400)
+
+            buf = alg_processing.get_graph(algorithm, input_type)
+            return HttpResponse(buf.getvalue(), content_type='image/png')
+        except Exception as e:
+            return JsonResponse({'error': e}, status=400)
         
         
 
