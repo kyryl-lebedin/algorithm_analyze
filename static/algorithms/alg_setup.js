@@ -70,6 +70,10 @@
         const inputType = document.getElementById('input_type').value;
         const postUrl = '../../algorithms/send_alg/';
         const csrfToken = getCookie('csrftoken'); 
+        if (!textareaValue.trim() || !inputType.trim()) {
+            document.getElementById('code_errors').textContent = 'Please fill all the required fields';
+            return; // Stop the function here if the validation fails
+        }
 
         fetch(postUrl, {
             method: 'POST',

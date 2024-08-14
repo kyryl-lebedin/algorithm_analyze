@@ -6,6 +6,7 @@ import random
 import time
 import io
 import ast
+import threading
 
 def get_function_object(code_str):
     function_valid = function_validate(code_str)
@@ -104,3 +105,19 @@ def list_input(function):
     # Return the sizes and times
     return sizes, times
 
+
+
+# def run_with_timeout(func, args, timeout):
+#     result = [None]  # A mutable object to store the function result
+
+#     def target(result, args):
+#         result[0] = func(args)
+
+#     thread = threading.Thread(target=target, args=(result, args))
+#     thread.start()
+#     thread.join(timeout)
+#     if thread.is_alive():
+#         print("Function timed out")
+#         thread.join()  # Optionally wait for thread to actually finish
+#     else:
+#         return result[0]
