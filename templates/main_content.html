@@ -1,4 +1,22 @@
-<p> Hello, ... </p>
-<form action="{% url 'algorithms:alg_setup' %}" method="get">
-    <button type="submit">Go to Target Page</button>
-</form>
+
+      {% extends "index.html" %}
+
+      {% block custom_static %}
+
+      <link href="../static/main_content.css" rel="stylesheet">
+    
+    {% endblock %}
+
+      {% block content %}
+
+      
+      <main role="main" class="inner cover">
+        <h1 class="cover-heading">Welcome!</h1>
+        <p class="lead">Just write you <strong style="color: rgb(216, 182, 138);">algorithm</strong> and our ai model will <strong style="color: rgb(216, 182, 138);">analyze</strong> it</p>
+        <form class="lead" action="{% url 'algorithms:alg_setup' %}" method="get">
+            <button type="submit" class="btn btn-lg btn-secondary">Start</button>
+        </form>
+        
+      </main>
+
+    {% endblock %}

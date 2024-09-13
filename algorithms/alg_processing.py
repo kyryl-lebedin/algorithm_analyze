@@ -15,36 +15,45 @@ def get_function_object(code_str):
     
     local_scope = {}
     
-    exec(code_str, globals(), local_scope)
+    # Execute the function definition in a scope where it can recursively reference itself
+    exec(code_str, local_scope, local_scope)  # Using local_scope as both global and local scope
     
     func_name = next(key for key, value in local_scope.items() if callable(value))
     algorithm = local_scope[func_name]
-     
+    
     return algorithm
+
 
 
 
 def get_graph(function, input_type):
     
     if input_type == 'list':
-            sizes, times = list_input(function)
+        sizes, times = list_input(function)
 
-            plt.figure()
-            plt.plot(sizes, times)
-            plt.xlabel('Size of List (n)')
-            plt.ylabel('Time (s)')
-            plt.title('Time Complexity')
+        # Fit a polynomial curve to the data
+        coefficients = np.polyfit(sizes, times, deg=4)  # Degree 2 polynomial for example
+        poly = np.poly1d(coefficients)
 
-            # Save the plot to a BytesIO stream
-            buf = io.BytesIO()
-            plt.savefig(buf, format='png')
-            plt.close()  # Close the figure to free memory
-            buf.seek(0)  # Rewind your buffer
+        # Generate smooth data for the fitted curve
+        smooth_sizes = np.linspace(min(sizes), max(sizes), 500)  # Smooth sizes from min to max size
+        smooth_times = poly(smooth_sizes)  # Evaluate polynomial
 
-            #image_base64 = base64.b64encode(buf.getvalue()).decode('ascii')
-        
+        plt.figure()
+        plt.plot(sizes, times, 'o', markersize=3, label='Original Data')  # Original data points
+        plt.plot(smooth_sizes, smooth_times, 'r-', label='Fitted Curve')  # Fitted curve
+        plt.xlabel('Size of List (n)')
+        plt.ylabel('Time (s)')
+        plt.title('Time Complexity')
+        plt.legend()
 
-            return buf
+        # Save the plot to a BytesIO stream
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        plt.close()  # Close the figure to free memory
+        buf.seek(0)  # Rewind your buffer
+
+        return buf
 
 
 
@@ -83,7 +92,7 @@ def function_validate(code_str):
 
 def list_input(function):
     
-    n_size = 1000
+    n_size = 500
     a_size = 100
     sizes = list(range(1, n_size)) 
     times = []

@@ -1,16 +1,14 @@
+{% extends "index.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
 
-<head>
-<meta charset="UTF-8">
-<title>Select Algorithm Type</title>
-
-  
+{% block custom_static %}
 <link rel="stylesheet" href="{% static 'algorithms/alg_setup.css' %}">
 <script src="{% static 'algorithms/alg_setup.js' %}" defer></script>
-</head>
+<link href="../../static/main_content.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
 <body>
 <form>
     {% csrf_token %} <!-- generates the token on server and adds to browser cookies -->
@@ -48,4 +46,6 @@
 
 
 </body>
-</html>
+
+{% endblock %}
+

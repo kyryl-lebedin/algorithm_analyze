@@ -55,8 +55,8 @@ def send_alg(request):
 
             buf = alg_processing.get_graph(algorithm, input_type)
             return HttpResponse(buf.getvalue(), content_type='image/png')
-        except Exception:
-            return JsonResponse({'error': 'Invalid syntax'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
         
         
 

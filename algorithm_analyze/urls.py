@@ -22,4 +22,5 @@ urlpatterns = [
     path('algorithms/', include('algorithms.urls')),
     path('admin/', admin.site.urls),
     path('', views.home_view, name='home'),
+    path('test/', views.test_template, name='test'),
 ]
