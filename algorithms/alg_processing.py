@@ -92,8 +92,8 @@ def function_validate(code_str):
 
 def list_input(function):
     
-    n_size = 500
-    a_size = 100
+    n_size = 800
+    a_size = 600
     sizes = list(range(1, n_size)) 
     times = []
 
