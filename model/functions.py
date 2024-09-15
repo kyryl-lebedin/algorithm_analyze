@@ -31,16 +31,17 @@ def constant_function7(sequence):
     x = -1
     return x
 """,
+
+"""
+def constant_function11(sequence):
+    x = -1
+    return x
+""",
         
 
         
         ],
-        "string with letters only": [
-"""
-def constant_function10(s):
-    return "unchanged"
-""",
-        ],
+
         "matrix": [
 """
 def constant_function8(matrix):
@@ -108,19 +109,22 @@ def linear_function7(sequence):
         total += i * value
     return total
 """,
+"""
+def linear_function16(lst):
+    squared = [x ** 2 for x in lst]
+    return squared
+""",
+"""
+def linear_function17(sequence):
+    total = 0
+    for i, value in enumerate(sequence):
+        total += i * value
+    return total
+""",
 ],
 
-        "string with letters only": [
-"""
-def linear_function9(s):
-    return ''.join(reversed(s))
-""",
-"""
-def linear_function10(string_input):
-    vowels = 'aeiouAEIOU'
-    return [char for char in string_input if char in vowels]
-""",
-        ],
+
+
         "matrix": [
 
 """
@@ -165,17 +169,14 @@ def pairwise_sum(arr):
 #
 
 """
-def count_zero_sum_triplets(arr):
-    count = 0
+def bubble_sort(arr):
     n = len(arr)
     for i in range(n):
-        for j in range(i + 1, n):
-            for k in range(j + 1, n):
-                if arr[i] + arr[j] + arr[k] == 0:
-                    count += 1
-    return count
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+    return arr
 """,
-
 #
 
 """
@@ -187,6 +188,8 @@ def bubble_sort(arr):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
     return arr
 """,
+
+
 
 """
 def quadratic_function(arr):
@@ -366,22 +369,19 @@ def find_fixed_point(arr):
 """,
 #
 """
-def binary_search(arr, target):
+def find_peak(arr):
     left = 0
     right = len(arr) - 1
-    
-    while left <= right:
-        mid = (left + right) // 2
-        
-        if arr[mid] == target:
-            return mid  # Target found at index mid
-        elif arr[mid] < target:
-            left = mid + 1  # Search in the right half
-        else:
-            right = mid - 1  # Search in the left half
-    
-    return -1  # Target not found
 
+    while left < right:
+        mid = (left + right) // 2
+
+        if arr[mid] < arr[mid + 1]:
+            left = mid + 1  # Peak is in the right half
+        else:
+            right = mid  # Peak is in the left half (including mid)
+
+    return arr[left]
 """,
 #
 """
