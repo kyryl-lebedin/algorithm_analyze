@@ -1,3 +1,5 @@
 /venv
 *.pyc
 *.sqlite3
+/model/images
+/model/images3
