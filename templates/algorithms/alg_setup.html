@@ -1,51 +1,116 @@
 {% extends "index.html" %}
 {% load static %}
 
-
 {% block custom_static %}
 <link rel="stylesheet" href="{% static 'algorithms/alg_setup.css' %}">
 <script src="{% static 'algorithms/alg_setup.js' %}" defer></script>
-<link href="../../static/main_content.css" rel="stylesheet">
+<style>
+  /* Flexbox container for the left (textarea or image) and right (forms or AI text) sections */
+  .flex-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+  }
+
+  /* Styling for the left (textarea or image) */
+  .flex-left {
+    flex: 1;
+    margin-right: 20px; /* Add space between the sections */
+    text-align: center;
+  }
+
+  /* Styling for the right (forms or AI text) */
+  .flex-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  textarea {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    max-width: 500px; /* Limiting width for aesthetics */
+  }
+
+  form {
+    margin-bottom: 20px; /* Space between the forms */
+  }
+
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
+  img {
+    display: block;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 600px; /* Limiting max width of image */
+  }
+
+  /* Hiding AI text initially */
+  #anal_description {
+    display: none;
+  }
+
+</style>
 {% endblock %}
 
 {% block content %}
-<body>
-<form>
-    {% csrf_token %} <!-- generates the token on server and adds to browser cookies -->
-  
-    {% for alg_type in algorithm_types %}
-      <input type="checkbox" id="{{alg_type}}" name="algorithm_type" value="{{alg_type}}" onchange="handleAlgorithmTypeSelection(this)">
-      <label for="{{alg_type}}">{{alg_type}}</label>
-    
-    {% endfor %}
-</form>
-<form id="inputType">
-    <!-- Dropdown field -->
-    <label for="input_type">Input Type:</label>
-    <select id="input_type" name="input_type" required>
-        <option value=""></option>
-        <option value="list">List</option>
-        <!-- Add more options as needed -->
-    </select>
-</form>
+<div class="flex-container" id="flex-container">
+    <!-- Left section: textarea (will be replaced by image) -->
+    <div class="flex-left" id="left-section">
+        <form id="input-form">
+            <textarea id="algInput" name="algInput"></textarea>
+            <p id="code_errors"></p>
+        </form>
+        <img id="imageElement" style="display: none;">
+    </div>
 
-<form id="algorithmForm">
-    <!-- Dynamically filled checkboxes will go here -->
-</form>
+    <!-- Right section: forms and analyze button (will be replaced by AI analysis text) -->
+    <div class="flex-right" id="right-section">
+        <form id="algorithm-selection-form">
+            {% csrf_token %}
+            {% for alg_type in algorithm_types %}
+                <input type="checkbox" id="{{alg_type}}" name="algorithm_type" value="{{alg_type}}" onchange="handleAlgorithmTypeSelection(this)">
+                <label for="{{alg_type}}">{{alg_type}}</label>
+            {% endfor %}
+        </form>
 
-<form>
-    <textarea id="algInput" name="algInput"></textarea>
-    <p id="code_errors"></p>
-    <button type="submit" onclick="handleCodeSubmission(event)">Analyze</button>
-</form>
+        <form id="inputType">
+            <label for="input_type">Input Type:</label>
+            <select id="input_type" name="input_type" required>
+                <option value=""></option>
+                <option value="list">List</option>
+                <!-- Add more options as needed -->
+            </select>
+        </form>
 
-<img id="imageElement"  style="width:100%; max-width: 600px;">
+        <form id="algorithmForm">
+            <!-- Dynamically filled checkboxes will go here -->
+        </form>
 
-<p id="anal_description" style="display: none;" > Our AI model thinks that complexity of this graph with 87%: <strong id="sign" style="color: red;">I WANT TO DESTROY HUMANITY</strong></p>
+        <form id="analyze-button-form">
+            <button type="submit" onclick="handleCodeSubmission(event)">Analyze</button>
+        </form>
 
-
-
-</body>
-
+        <!-- Hidden AI text section -->
+        <p id="anal_description" style="display: none;">
+            Our AI model thinks that the complexity of this graph is 87%: 
+            <strong id="sign" style="color: red;">I WANT TO DESTROY HUMANITY</strong>
+        </p>
+    </div>
+</div>
 {% endblock %}
-

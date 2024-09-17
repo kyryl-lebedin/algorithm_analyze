@@ -65,7 +65,7 @@
 
     function handleCodeSubmission(event) {
         event.preventDefault();
-
+    
         const textareaValue = document.getElementById('algInput').value;
         const inputType = document.getElementById('input_type').value;
         const postUrl = '../../algorithms/send_alg/';
@@ -74,7 +74,7 @@
             document.getElementById('code_errors').textContent = 'Please fill all the required fields';
             return; // Stop the function here if the validation fails
         }
-
+    
         fetch(postUrl, {
             method: 'POST',
             headers: {
@@ -89,34 +89,34 @@
         .then(response => {
             if (!response.ok) {
                 return response.json().then(err => {
-                    document.getElementById('code_errors').textContent =  err.error;
+                    document.getElementById('code_errors').textContent = err.error;
                     throw new Error('Error from server: ' + err.error);
-
-                })
+                });
             }
             
-            return response.blob()
-        
-        })  
+            return response.blob(); // Handle the response as a blob (image)
+        })
         .then(imageBlob => {
-        // Create a local URL for the blob object
-        
-        var forms = document.querySelectorAll('form');
-
-        // Loop through each form and set display to none
-        forms.forEach(function(form) {
-            form.style.display = 'none';
-        });
-
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-
-        // Assuming you have an img element in your HTML to display the image
-        document.getElementById('imageElement').src = imageObjectURL;
-        document.getElementById('anal_description').style.display = 'block';
+            // Hide the forms and textarea
+            document.getElementById('input-form').style.display = 'none';
+            document.getElementById('algorithm-selection-form').style.display = 'none';
+            document.getElementById('inputType').style.display = 'none';
+            document.getElementById('algorithmForm').style.display = 'none';
+            document.getElementById('analyze-button-form').style.display = 'none';
+    
+            // Display the image
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            const imageElement = document.getElementById('imageElement');
+            imageElement.src = imageObjectURL;
+            imageElement.style.display = 'block'; // Show the image
+    
+            // Display the AI analysis text
+            document.getElementById('anal_description').style.display = 'block';
         })
         .catch(error => console.error('Error:', error));
-
     }
+    
+
 
     function getCookie(name) {
         let cookieValue = null;

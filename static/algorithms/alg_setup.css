@@ -1,15 +1,7 @@
+
 textarea {
     width: 600px;   /* Width of the text area */
     height: 200px;  /* Height of the text area */
     font-size: 16px; /* Font size inside the text area */
 }
 
-#sign {
-     /* Keeps it hidden until you decide to show it */
-     /* Makes the text red */
-    font-size: 24px; /* Increases the size of the text */
-    font-weight: bold; /* Makes the font bold */
-    font-family: 'Arial', sans-serif; /* Sets a modern, sans-serif font */
-    text-shadow: 1px 1px 2px black; /* Adds a subtle shadow for a stylish effect */
-    margin: 20px; /* Adds space around the text */
-}

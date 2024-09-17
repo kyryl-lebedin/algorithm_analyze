@@ -1,22 +1,23 @@
+{% extends "index.html" %}
+{% load static %}
 
-      {% extends "index.html" %}
+{% block custom_static %}
+<link rel="stylesheet" href="{% static 'main/main_content.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{% static 'main/main_content.js' %}" defer></script>
+{% endblock %}
 
-      {% block custom_static %}
+{% block content %}
+<main role="main" class="inner cover full-page-content" style="height: 100%; display: flex; justify-content: center; align-items: center; text-align: center; color: #fff; text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);">
+  
+  <div>
+    <h1 class="cover-heading typing" id="welcome-text" style="font-size: 5vw;"></h1>
+    <p class="lead typing" id="sub-text" style="font-size: 2vw; white-space: nowrap;"></p>
+    <form class="lead" action="{% url 'algorithms:alg_setup' %}" method="get">
+      <button id="start-btn" type="submit" class="btn btn-lg btn-secondary full-width-button fade-in-button" style="color: #333; background-color: #fff; border: .05rem solid #fff; font-size: 1.5vw; padding: 0.5vw 1.5vw; width: 10vw; opacity: 0;">Start</button>
+    </form>
+  </div>
 
-      <link href="../static/main_content.css" rel="stylesheet">
-    
-    {% endblock %}
+</main>
 
-      {% block content %}
-
-      
-      <main role="main" class="inner cover">
-        <h1 class="cover-heading">Welcome!</h1>
-        <p class="lead">Just write you <strong style="color: rgb(216, 182, 138);">algorithm</strong> and our ai model will <strong style="color: rgb(216, 182, 138);">analyze</strong> it</p>
-        <form class="lead" action="{% url 'algorithms:alg_setup' %}" method="get">
-            <button type="submit" class="btn btn-lg btn-secondary">Start</button>
-        </form>
-        
-      </main>
-
-    {% endblock %}
+{% endblock %}
