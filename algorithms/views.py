@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse, Http404, JsonResponse
 import json
+import base64
 
 from . import alg_processing
 
@@ -55,9 +56,14 @@ def send_alg(request):
                 return JsonResponse({'error': algorithm}, status=400)
 
             print(input_type)
-            buf, predicitons = alg_processing.algorithm_analyze(algorithm, input_type)
-            print(predicitons)
-            return HttpResponse(buf.getvalue(), content_type='image/png')
+            buf, predictions = alg_processing.algorithm_analyze(algorithm, input_type)
+            print(predictions)
+            image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+
+            return JsonResponse({
+                'image': image_base64,
+                'predictions': predictions
+            })
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)
         

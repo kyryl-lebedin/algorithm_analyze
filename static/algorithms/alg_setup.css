@@ -173,3 +173,93 @@ textarea {
   .mastfoot {
     color: rgba(255, 255, 255, .5);
   }
+
+
+@font-face {
+    font-family: 'Oswald-VariableFont';
+    src: url('Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.alg-button {
+  background-color: #f0f0f0; /* default color */
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Oswald-VariableFont';
+  font-size: 18px;
+}
+
+.alg-button:hover {
+  background-color: #ffea00; /* Background color when hovered */
+
+  color: #000000;            /* Font color when hovered */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+#analyze-button {
+  font-family: 'Oswald-VariableFont';
+  font-size: 18px;
+}
+
+.btn-info {
+  background-color: transparent; 
+  width: fit-content;
+  
+}
+
+#return-button {
+  font-family: 'Oswald-VariableFont';
+  font-size: 18px;
+}
+
+.alg-button.active {
+  background-color: #007bff; /* light up color */
+  color: white;
+}
+
+.alg-button.dimmed {
+  background-color: #d3d3d3; /* dim color */
+  color: #888;
+}
+
+.dropdown-toggle {
+  font-family: 'Oswald-VariableFont' ;
+  font-size: 18px;
+}
+
+.input-button {
+  background-color: #f0f0f0; /* default color */
+  color: black;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-family: 'Oswald-VariableFont';
+  font-size: 18px;
+
+}
+
+
+
+.input-button.active {
+  background-color: #d89b18; /* active color for input */
+  color: rgb(0, 0, 0);
+}
+
+.input-button.dimmed {
+  background-color: #d3d3d3; /* dim color */
+  color: #888;
+}
+
+.CodeMirror {
+  text-align: left; /* Ensures text is aligned to the left */
+  width: 100%;      /* Ensure it uses full width of the container */
+  margin: 0 auto;   /* Centering the editor itself if needed */
+}
+

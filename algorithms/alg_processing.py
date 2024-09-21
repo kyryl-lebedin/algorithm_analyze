@@ -72,7 +72,7 @@ def algorithm_analyze(func, input_type):
 
     def get_graph(function, input_type):
         
-        print(input_type)
+    
 
         if input_type == 'array':
             sizes, test_input = array_input()
@@ -94,9 +94,9 @@ def algorithm_analyze(func, input_type):
             sizes, test_input = graph_matrix_input()
         
         
-        print('kaka')
+        
         times = measure_times(function, test_input)
-        print('kaka2')
+        
             # Fit a polynomial curve to the data
         coefficients = np.polyfit(sizes, times, deg=pol_degree)  # Degree 4 polynomial
         poly = np.poly1d(coefficients)
@@ -213,10 +213,18 @@ def algorithm_analyze(func, input_type):
         label_encoder = joblib.load('model/label_encoder.pkl')
         scaler = joblib.load('model/scaler.pkl')
         data_normalized = scaler.transform([coefficients])
-        predicted_probabilities = loaded_model.predict_proba(data_normalized)
+        predicted_probabilities = loaded_model.predict_proba(data_normalized)[0]
         
-        predictions = dict(sorted(dict(zip(classes, predicted_probabilities[0])).items(), key=lambda item: item[1], reverse=True))
-        return predictions
+        sorted_predictions = sorted(
+        zip(classes, predicted_probabilities), 
+        key=lambda x: x[1], 
+        reverse=True
+        )
+    
+    # Convert to a dictionary and ensure probabilities are Python floats
+        prediction_dict = {class_name: float(prob) for class_name, prob in sorted_predictions}
+        
+        return prediction_dict
     
     
 
@@ -229,33 +237,33 @@ def algorithm_analyze(func, input_type):
 input_types = ['array', 'array & random index', 'nxn matrix', 'simple graph (adjacency matrix)']
 
 algorithm_types = { 
-    'sorting': {
+    'Sorting': {
         'input_type': 'array',
         'algorithms': ['bubble sort', 'selection sort', 'quick sort', 'merge sort']
     },
 
-    'searching': {
+    'Searching': {
         'input_type': 'array & random index',
         'algorithms': ['linear search', 'binary search']
     },
 
-    'selecting': {
+    'Selecting': {
         'input_type': 'array & random index',
         'algorithms': ['quick select', 'median of medians']
     },
 
-    'nxn matrix': {
+    'Matrix': {
         'input_type': 'nxn matrix',
         'algorithms': ['matrix transpose', 'frobenius norn']
     },
 
-    'graph': {
+    'Graph': {
         'input_type': 'simple graph (adjacency matrix)',
         'algorithms': ['depth first search', 'breadth first search', 'dijkstra']
     },
 
-    'custom': {
-        'input_type': '',
+    'Custom': {
+        'input_type': 'Custom',
         'algorithms': []
     }
 

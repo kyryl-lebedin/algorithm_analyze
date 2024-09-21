@@ -16,6 +16,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'algorithms/alg_setup.css' %}">
     <script src="{% static 'algorithms/alg_setup.js' %}" defer></script>
+    <!-- python like code -->
+    <!-- Include CodeMirror CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css">
+    <!-- Optional: Add a theme for CodeMirror -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/duotone-light.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/base16-light.min.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/juejin.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/paraiso-light.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/solarizedLight.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/yeti.min.css">
+
+
+    <!-- Include CodeMirror JS core -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.js"></script>
+    <!-- Include Python mode for syntax highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/mode/python/python.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    
 
     </head>
     
@@ -33,32 +56,63 @@
           </header>
 
             <!-- Choose algorithm type as the button layout-->
-          <form id="algorithm-selection-form">
-            {% csrf_token %} <!-- generates the token on server and adds to browser cookies -->
-          
-            {% for alg_type in algorithm_types %}
-              <input type="checkbox" id="{{alg_type}}" name="algorithm_type" value="{{alg_type}}" onchange="handleAlgorithmTypeSelection(this)">
-              <label for="{{alg_type}}">{{alg_type}}</label>
+            <form id="algorithm-selection-form">
+              {% csrf_token %} <!-- generates the token on server and adds to browser cookies -->
+              
+              {% for alg_type in algorithm_types %}
+                <button type="button" class="alg-button btn btn-outline-warning" id="{{alg_type}}" value="{{alg_type}}" onclick="handleAlgorithmTypeSelection(this)">
+                  {{alg_type}}
+                </button>
+              {% endfor %}
+            </form>
             
-            {% endfor %}
-          </form>
 
 
           <!-- Choose input type as the button layout -->
           <form id="input-selection-form">
             {% csrf_token %}
             {% for input_type in input_types %}
-                <input type="checkbox" id="{{input_type}}" name="input_type" value="{{input_type}}" onchange="handleInputTypeSelection(this)">
-                <label for="{{input_type}}">{{input_type}}</label><br>
+              <button type="button" class="input-button btn btn-outline-warning dimmed" disabled="true" id="{{input_type}}" value="{{input_type}}" onclick="handleUnrestrictedInputTypeSelection(this)">
+                {{input_type}}
+              </button><br>
             {% endfor %}
           </form>
           
       
   <!-- Choose the algorithm template checkbox-->
         
-        
+       <!-- Info button -->
+        <button  type="button" class="btn btn-info" data-toggle="modal" data-target="#infoModal">
+        <i class="bi bi-info-circle"></i> <!-- Font Awesome info icon -->
+        </button>
+
+        <!-- Modal -->
+<!-- Modal -->
+          <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="infoModalLabel">Information</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <!-- Your custom information text -->
+                  This is the information you want to show in the modal.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
         <form id="algorithmForm">
-          <select id="algorithmSelect" onchange="handleAlgorithmSelection(event)" name="algorithm" required>
+          <select id="algorithmSelect" class="dropdown-toggle" onchange="handleAlgorithmSelection(event)" name="algorithm" required>
               <option value="">(Optional) Algorithm Examples</option>
           </select>
         </form>
@@ -67,14 +121,14 @@
         <form id="analyze-button-form">
             <textarea id="algInput" name="algInput"></textarea>
             <p id="code_errors"></p>
-            <button type="submit" onclick="handleCodeSubmission(event)">Analyze</button>
+            <button type="submit" id="analyze-button" class="btn btn-outline-warning" onclick="handleCodeSubmission(event)">Analyze</button>
         </form>
         
         <img id="imageElement"  style="width:100%; max-width: 600px;">
         
         <p id="anal_description" style="display: none;" > Our AI model thinks that complexity of this graph with 87%: <strong id="sign" style="color: red;">I WANT TO DESTROY HUMANITY</strong></p>
         
-        
+        <button type="button" class="btn btn-outline-warning" id="return-button" onclick="returnToSetup()">Back</button>
         
             <footer class="mastfoot mt-auto">
                 <div class="inner">
