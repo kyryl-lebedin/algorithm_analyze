@@ -88,25 +88,137 @@
 
         <!-- Modal -->
 <!-- Modal -->
-          <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
+        <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="infoModalLabel">Information</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
+                    <h5 class="modal-title" id="infoModalLabel">Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="modal-body">
-                  <!-- Your custom information text -->
-                  This is the information you want to show in the modal.
+                    
+                    <p>The model uses a <strong>Random Forest</strong> algorithm for training. The selected features are the coefficients of a third-degree polynomial, fitted to the size-time graph to represent the complexity of various algorithms.</p>
+                    <p>To standardize the data, it was normalized by removing the mean and scaling it to unit variance. The model is trained to classify into only five main complexity classes:</p>
+                    <ul>
+                        <li>Constant</li>
+                        <li>Linear</li>
+                        <li>Polynomial</li>
+                        <li>Logarithmic</li>
+                        <li>Log-linear</li>
+                    </ul>
+                    <p><strong>Note:</strong> This model is not trained to recognize any other classes beyond the five listed above. The training data was generated from various algorithms and randomized to eliminate statistical bias. Model was tested on 20% of data.</p>
+                    
+                    <h5>Model Performance:</h5>
+                    <table class="custom-table">
+                      <thead>
+                          <tr>
+                              <th>Class</th>
+                              <th>Precision</th>
+                              <th>Recall</th>
+                              <th>F1-Score</th>
+                              <th>Support</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>0 (Constant)</td>
+                              <td>1.00</td>
+                              <td>1.00</td>
+                              <td>1.00</td>
+                              <td>32</td>
+                          </tr>
+                          <tr>
+                              <td>1 (Linear)</td>
+                              <td>0.98</td>
+                              <td>0.91</td>
+                              <td>0.94</td>
+                              <td>45</td>
+                          </tr>
+                          <tr>
+                              <td>2 (Polynomial)</td>
+                              <td>0.95</td>
+                              <td>0.95</td>
+                              <td>0.95</td>
+                              <td>42</td>
+                          </tr>
+                          <tr>
+                              <td>3 (Logarithmic)</td>
+                              <td>0.97</td>
+                              <td>0.97</td>
+                              <td>0.97</td>
+                              <td>39</td>
+                          </tr>
+                          <tr>
+                              <td>4 (Log-linear)</td>
+                              <td>0.91</td>
+                              <td>0.98</td>
+                              <td>0.94</td>
+                              <td>42</td>
+                          </tr>
+                      </tbody>
+                  </table>
+                  
+                    <br>
+                    <p><strong>Overall Accuracy:</strong> <strong style="color: yellow; font-weight: bold;">0.96</strong></p>
+                    <p><strong>Macro Average:</strong> 0.96 precision, 0.96 recall, 0.96 F1-score</p>
+                    <p><strong>Weighted Average:</strong> 0.96 precision, 0.96 recall, 0.96 F1-score</p>
+
+                    <h3>Algorithm Type</h3>
+                    <p>Select the algorithm type you wish to analyze. You can choose from pre-defined types, which come with specific inputs, or write a custom algorithm and choose the input format that suits your needs.</p>
+
+                    <h3>Input Type</h3>
+                    <ul>
+                        <li><strong>Array:</strong> Python list with random numbers.</li>
+                        <li><strong>Array & Random Index:</strong> Python list with an additional random index within the range of the list.</li>
+                        <li><strong>nxn Matrix:</strong> List of n lists, each containing random numbers, where the size is n.</li>
+                        <li><strong>Simple Graph:</strong> Adjacency matrix representing a graph.</li>
+                    </ul>
+
+                    <h3>Input Size</h3>
+                    <p>You can modify the input size to observe how it influences the runtime of algorithms. For complex algorithms, such as those with exponential, higher polynomial, or factorial complexities, it is recommended to reduce the input size to avoid exceeding time limits. For these cases, an input size of <strong>5-20</strong> is optimal.</p>
+
+                    <h3>Example Algorithms</h3>
+                    <p>Here are popular algorithms from each category for testing the model. Expected time complexities are provided:</p>
+
+                    <h5>Sorting Algorithms:</h5>
+                    <ul>
+                        <li><strong>Bubble Sort:</strong> Polynomial (O(n²))</li>
+                        <li><strong>Selection Sort:</strong> Polynomial (O(n²))</li>
+                        <li><strong>Quick Sort:</strong> Log-linear (O(n log n) on average, O(n²) worst case)</li>
+                        <li><strong>Merge Sort:</strong> Log-linear (O(n log n))</li>
+                    </ul>
+
+                    <h5>Searching Algorithms:</h5>
+                    <ul>
+                        <li><strong>Linear Search:</strong> Linear (O(n))</li>
+                        <li><strong>Binary Search:</strong> Logarithmic (O(log n))</li>
+                    </ul>
+
+                    <h5>Selecting Algorithms:</h5>
+                    <ul>
+                        <li><strong>Quick Select:</strong> Linear (O(n) on average, O(n²) worst case)</li>
+                        <li><strong>Median of Medians:</strong> Linear (O(n))</li>
+                    </ul>
+
+                    <h5>Matrix Algorithms:</h5>
+                    <ul>
+                        <li><strong>Matrix Transpose:</strong> Linear (O(n²)) where n is the size of the matrix (nxn)</li>
+                        <li><strong>Frobenius Norm:</strong> Linear (O(n²)) where n is the size of the matrix (nxn)</li>
+                    </ul>
+
+                    <h5>Graph Algorithms:</h5>
+                    <ul>
+                        <li><strong>Depth First Search (DFS):</strong> Linear (O(V + E)) where V is vertices and E is edges.</li>
+                        <li><strong>Breadth First Search (BFS):</strong> Linear (O(V + E))</li>
+                        <li><strong>Dijkstra's Algorithm:</strong> Log-linear (O((V + E) log V)) with priority queue optimization</li>
+                    </ul>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
+        </div>
+
 
 
 
@@ -132,7 +244,7 @@
         
             <footer class="mastfoot mt-auto">
                 <div class="inner">
-                  <p>GitHub: <a href="https://github.com/kyryl-lebedin">@kyryl-lebedin</a> LinkedIn: <a href="https://www.linkedin.com/in/kyryl-lebedin/">@kyryl-lebedin</a></p>
+                  <p>GitHub/LinkedIn: <a href="https://github.com/kyryl-lebedin">@kyryl-lebedin</a> </p>
                 </div>
               </footer>
             </div>

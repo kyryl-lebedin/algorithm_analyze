@@ -37,6 +37,8 @@ function handleAlgorithmTypeSelection(current) {
       const in_type = document.getElementById(data.input_type);
       console.log(in_type)
       console.log(current.value)
+      myCodeMirror.setValue(data.template);
+      myCodeMirror.setOption("readOnly", false);
       if (current.value !== 'Custom') {
             
             handleInputTypeSelection(in_type);
@@ -106,7 +108,7 @@ function handleCodeSubmission(event) {
         },
         body: JSON.stringify({
             alg_code: textareaValue,
-            input_type: inputType
+            input_type: inputType,
         })
     })
     .then(response => {
@@ -133,27 +135,43 @@ function handleCodeSubmission(event) {
     
         // Display the AI analysis text (predictions)
         const predictions = data.predictions;
-        const predictionsElement = document.getElementById('anal_description');
+        const classSign = data.class_sign;
         
-        if (predictionsElement) {
-            // Find the prediction with the highest probability
-            let maxPrediction = { algorithm: '', probability: 0 };
-    
-            for (const [algorithm, probability] of Object.entries(predictions)) {
-                if (probability > maxPrediction.probability) {
-                    maxPrediction = { algorithm, probability };
+        
+        const predictionsElement = document.getElementById('anal_description');
+
+        // Convert predictions object to an array of [key, value] pairs
+        const sortedPredictions = Object.entries(predictions);  // Assuming predictions are already sorted
+
+        // Extract the main result (first item)
+        const [mainResult, mainProb] = sortedPredictions[0];
+
+        // Format the confidence percentage for the main result
+        const mainResultText = `
+            <div style="text-align: center;">
+                Model predicts with <span style="font-size: 1.5em; color: #d89b18; font-family: 'Oswald-VariableFont';">${(mainProb * 100).toFixed(1)}% confidence</span>
+            </div>
+            <div style="text-align: center; margin-top: 10px;">
+                Time Complexity: <span style="font-size: 1.5em; font-family: 'Oswald-VariableFont'; color: #d89b18;">${classSign} - ${mainResult.charAt(0).toUpperCase() + mainResult.slice(1)}</span>
+            </div>
+`;
+        // Display the main result in the element
+        predictionsElement.innerHTML = mainResultText;
+
+        // If the main result isn't 100%, display secondary results
+        if (mainProb < 1) {
+            let secondaryResultsText = "<div style='margin-top: 20px;'>Also:</div>";
+            for (let i = 1; i < sortedPredictions.length; i++) {
+                const [result, prob] = sortedPredictions[i];
+                if (prob > 0) {
+                    secondaryResultsText += `<div>with ${(prob * 100).toFixed(1)}% - ${result.charAt(0).toUpperCase() + result.slice(1)}</div>`;
                 }
             }
-    
-            // Update the inner HTML with the highest prediction and its percentage
-            predictionsElement.innerHTML = `Our AI model thinks that the complexity of this graph is most likely <strong>${maxPrediction.algorithm}</strong> with ${(maxPrediction.probability * 100).toFixed(2)}% confidence.`;
-    
-            // Show the updated description
-            predictionsElement.style.display = 'block';
-    
-        } else {
-            console.error("Predictions element not found in the DOM.");
+            // Append secondary results to the main result
+            predictionsElement.innerHTML += secondaryResultsText;
         }
+        predictionsElement.style.display = 'block'; // Show the predictions text
+
     })
     
     .catch(error => console.error('Error:', error));
@@ -270,6 +288,7 @@ var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
     indentUnit: 4,           // Set indentation to 4 spaces
     matchBrackets: true,      // Highlight matching brackets
     autoCloseBrackets: true,
+    readOnly: true,
 });
 
     
@@ -280,3 +299,5 @@ var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
 function returnToSetup() {
     window.location.href = '../../algorithms/alg_setup/';
 }
+
+myCodeMirror.setValue("Choose your Algorithm Type first");

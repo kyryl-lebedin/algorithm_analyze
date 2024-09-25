@@ -206,11 +206,43 @@ textarea {
   font-size: 18px;
 }
 
-.btn-info {
-  background-color: transparent; 
-  width: fit-content;
-  
+#anal_description {
+  font-family: 'Garamond';
+  font-size: 18px;
+  color: #dddddd;
 }
+
+.btn-info {
+  background-color: transparent !important; /* Always keep the background transparent */
+  border: none; /* Remove border if needed */
+  outline: none;
+  width: fit-content;
+}
+
+.btn-info:hover,
+.btn-info:focus,
+.btn-info:active,
+.btn-info:focus:active {
+    background-color: transparent !important;  /* Keep background transparent on hover, focus, and active */
+    border: none !important;                   /* Ensure no border appears */
+    outline: none !important;                  /* Ensure no outline appears */
+    box-shadow: none !important;               /* Remove any shadow effect */
+}
+
+.btn-info:focus {
+    outline: 0 !important;                     /* Special case for removing focus outline */
+    border-color: transparent !important;      /* Make sure the border color is transparent */
+}
+
+.btn-info:hover {
+  color: #d89b18; 
+}
+
+.close {
+  border: none !important;                   /* Ensure no border appears */
+  outline: none !important;
+}
+
 
 #return-button {
   font-family: 'Oswald-VariableFont';
@@ -263,3 +295,112 @@ textarea {
   margin: 0 auto;   /* Centering the editor itself if needed */
 }
 
+#return-button {
+  font-family: 'Oswald-VariableFont';
+  font-size: 18px;
+  width: fit-content;
+}
+
+#infoModal .modal-body {
+  margin-left: 20px;  /* Adjust the left margin */
+  margin-right: 20px; /* Adjust the right margin */
+}
+
+
+.modal-dialog {
+  max-width: 55%;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  background-color: #414141; /* Light gray background */
+  color: #dddddd; /* white text */
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.644);
+  align-items: left;
+  text-align: left;
+ 
+  font-family: 'Garamond';
+  border-radius: 15px;
+
+}
+
+#infoModalLabel {
+  font-family: 'Oswald-VariableFont';
+  
+  color: #d89b18;
+
+}
+
+/* to review */
+
+.modal-header {
+  
+  color: white; /* White text */
+  border-bottom: 2px solid #68686875;
+  margin-left: 20px;  /* Indent from the left */
+  margin-right: 20px; /* Indent from the right */
+  padding-bottom: 10px;
+}
+
+
+
+/* Customize the close button color */
+.modal-header .close {
+  color: white;
+  opacity: 0.8;
+}
+
+.modal-header .close:hover {
+  opacity: 1;
+}
+
+
+    /* Style for the table */
+    .custom-table {
+      width: 100%;
+      border-collapse: separate; /* Important to separate the cells */
+      border-spacing: 0; /* Reset any spacing between the cells */
+      border: 1.5px solid #68686875; /* Customize the outer border */
+      border-radius: 10px; /* Rounded corners for the table */
+      overflow: hidden; /* Ensures borders respect the rounded corners */
+  }
+  
+  /* Style for the table cells */
+  .custom-table th, .custom-table td {
+      border: 1px solid #68686875; /* Customize the color of cell borders */
+      padding: 10px;
+      text-align: left;
+  }
+  
+  /* Styling for the table header */
+  .custom-table th {
+      background-color: #4f4f4f; /* Header background color */
+      color: #ffffff; /* Header text color */
+  }
+  
+  /* Styling for the table body */
+  .custom-table td {
+      background-color: #333333; /* Body background color */
+      color: #ffffff; /* Text color */
+  }
+  
+  /* For custom hover effect */
+  .custom-table tbody tr:hover {
+      background-color: #f9f9f9;
+  }
+
+
+/* style h3 tag */
+
+#infoModal h3 {
+  font-family: 'Oswald-VariableFont';
+  
+  color: #d89b18;
+  text-align: center;
+}
+
+ul {
+  list-style-type: none; /* Removes bullet points */
+  padding-left: 10px;       /* Removes any default left padding */
+  margin-left: 10px;        /* Ensures the list is aligned to the left */
+}

@@ -22,6 +22,7 @@ def send_to_alg_setup(request):
     return render(request, 'algorithms/alg_setup.html', context)
 
 def receive_alg_type(request):
+    """Receive the algorithm type and return the data related to this algorithm type"""
     if request.method == 'POST':
         try:
             # Decode request.body (byte string) and parse it as JSON
@@ -56,13 +57,15 @@ def send_alg(request):
                 return JsonResponse({'error': algorithm}, status=400)
 
             print(input_type)
-            buf, predictions = alg_processing.algorithm_analyze(algorithm, input_type)
+            buf, predictions, cls_sign = alg_processing.algorithm_analyze(algorithm, input_type)
             print(predictions)
             image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+            print(cls_sign)
 
             return JsonResponse({
                 'image': image_base64,
-                'predictions': predictions
+                'predictions': predictions,
+                'class_sign': cls_sign
             })
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=400)

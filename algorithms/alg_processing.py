@@ -66,7 +66,7 @@ def function_validate(code_str):
 def algorithm_analyze(func, input_type):
     pol_degree = 3
 
-    print(input_type)
+    
 
 
 
@@ -191,7 +191,7 @@ def algorithm_analyze(func, input_type):
     #     return sizes, test_strings
 
     def measure_times(function, test_input):
-        print('kaka3')
+        
         times = []
 
         for test_list in test_input:
@@ -207,64 +207,97 @@ def algorithm_analyze(func, input_type):
 
         return times
     
-    classes = ['constant', 'linear', 'log(n)', 'nlog(n)', 'polynomial']
+    cls_sign = ['O(1)', 'O(n)', 'O(log(n))', 'O(nlog(n))', 'O(n^a)']
+    classes = ['constant', 'linear', 'logarithmic', 'log linear', 'polynomial']
     def model_prediction(coefficients):
         loaded_model = joblib.load('model/random_forest_model.pkl')
         label_encoder = joblib.load('model/label_encoder.pkl')
         scaler = joblib.load('model/scaler.pkl')
         data_normalized = scaler.transform([coefficients])
+    
         predicted_probabilities = loaded_model.predict_proba(data_normalized)[0]
         
         sorted_predictions = sorted(
-        zip(classes, predicted_probabilities), 
+        [(class_name, prob) for class_name, prob in zip(classes, predicted_probabilities) if prob > 0], 
         key=lambda x: x[1], 
         reverse=True
         )
     
     # Convert to a dictionary and ensure probabilities are Python floats
         prediction_dict = {class_name: float(prob) for class_name, prob in sorted_predictions}
-        
-        return prediction_dict
+       
+        print(loaded_model.predict(data_normalized))
+        class_sign = cls_sign[loaded_model.predict(data_normalized)[0]]
+       
+        return prediction_dict, class_sign
     
     
 
     buf, coefficients = get_graph(func, input_type)
-    predictions = model_prediction(coefficients)
     
-    return buf, predictions
+    predictions, cls_sign = model_prediction(coefficients)
+    print(cls_sign)
+    
+    return buf, predictions, cls_sign
 
 
 input_types = ['array', 'array & random index', 'nxn matrix', 'simple graph (adjacency matrix)']
 
+
+
 algorithm_types = { 
     'Sorting': {
         'input_type': 'array',
-        'algorithms': ['bubble sort', 'selection sort', 'quick sort', 'merge sort']
+        'algorithms': ['bubble sort', 'selection sort', 'quick sort', 'merge sort'],
+        'template':
+"""def your_sorting_algorithm(arr):
+    # Type your your code here, or select algorithm example :)
+"""
     },
 
     'Searching': {
         'input_type': 'array & random index',
-        'algorithms': ['linear search', 'binary search']
+        'algorithms': ['linear search', 'binary search'],
+        'template':
+"""def your_searching_algorithm(arr, x):
+    # Type your your code here, or select algorithm example :)
+"""
     },
 
     'Selecting': {
         'input_type': 'array & random index',
-        'algorithms': ['quick select', 'median of medians']
+        'algorithms': ['quick select', 'median of medians'],
+        'template':
+"""def your_selecting_algorithm(arr, k):
+    # Type your your code here, or select algorithm example :)
+"""
     },
 
     'Matrix': {
         'input_type': 'nxn matrix',
-        'algorithms': ['matrix transpose', 'frobenius norn']
+        'algorithms': ['matrix transpose', 'frobenius norn'],
+        'template':
+"""def your_matrix_algorithm(matrix):
+    # Type your your code here, or select algorithm example :)
+"""
     },
 
     'Graph': {
         'input_type': 'simple graph (adjacency matrix)',
-        'algorithms': ['depth first search', 'breadth first search', 'dijkstra']
+        'algorithms': ['depth first search', 'breadth first search', 'dijkstra'],
+        'template':
+"""def your_graph_algorithm(graph, start):
+    # Type your your code here, or select algorithm example :)
+"""
     },
 
     'Custom': {
         'input_type': 'Custom',
-        'algorithms': []
+        'algorithms': [],
+        'template':
+"""def your_custom_algorithm(input):
+    # Type your your code here, or select algorithm example :)
+"""
     }
 
 }
