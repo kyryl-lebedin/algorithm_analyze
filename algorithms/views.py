@@ -52,12 +52,15 @@ def send_alg(request):
             data = json.loads(request.body.decode('utf-8'))
             algorithm = data.get('alg_code')
             input_type = data.get('input_type')
+            n = int(data.get('n'))
+            a = int(data.get('a'))
+            
             algorithm = alg_processing.get_function_object(algorithm)
             if type(algorithm) == type('string'):
                 return JsonResponse({'error': algorithm}, status=400)
 
             print(input_type)
-            buf, predictions, cls_sign = alg_processing.algorithm_analyze(algorithm, input_type)
+            buf, predictions, cls_sign = alg_processing.algorithm_analyze(algorithm, input_type, n, a)
             print(predictions)
             image_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
             print(cls_sign)

@@ -92,6 +92,9 @@ function handleCodeSubmission(event) {
     const textareaValue = myCodeMirror.getValue();
     const postUrl = '../../algorithms/send_alg/';
     const csrfToken = getCookie('csrftoken');
+
+    const nValue = document.getElementById('slider1').value;
+    const aValue = document.getElementById('slider2').value;
     
     if (!textareaValue.trim() || !inputType) {
         document.getElementById('code_errors').textContent = 'Please fill all the required fields';
@@ -109,6 +112,8 @@ function handleCodeSubmission(event) {
         body: JSON.stringify({
             alg_code: textareaValue,
             input_type: inputType,
+            n: nValue,
+            a: aValue
         })
     })
     .then(response => {
@@ -219,12 +224,11 @@ function handleInputTypeSelection(current) {
     
     // Deselect all buttons and apply 'dimmed' class
     buttons.forEach(button => {
-        
-      if (button !== current) {
-        button.classList.remove('active');
-        button.classList.add('dimmed');
-        button.disabled = true;
-      }
+        if (button !== current) {
+            button.classList.remove('active');
+            button.classList.add('dimmed');
+            button.disabled = true;
+        }
     });
     
     // Activate the selected button and remove 'dimmed' class
@@ -232,49 +236,123 @@ function handleInputTypeSelection(current) {
     current.classList.add('active');
     current.classList.remove('dimmed');
     
-  }
+    // Show the range sliders
+    const rangeSliderContainer = document.getElementById('range-slider-container');
+    rangeSliderContainer.style.display = 'block';
+
+    // Update the first slider with the values from the selected button
+    const slider1 = document.getElementById('slider1');
+    const slider1Label = document.getElementById('slider1-label');
+    const slider1Value = document.getElementById('slider1-value');
+    
+    slider1.min = 1;
+    slider1.max = current.getAttribute('data-n-max');
+    slider1.value = current.getAttribute('data-n');
+    slider1Label.textContent = current.getAttribute('data-input-name');
+    slider1Value.textContent = slider1.value; // Update the display of slider1 value
+
+    // Update the second slider with the values from the selected button
+    const slider2 = document.getElementById('slider2');
+    const slider2Value = document.getElementById('slider2-value');
+    
+    slider2.min = 1;
+    slider2.max = current.getAttribute('data-a-max');
+    slider2.value = current.getAttribute('data-a');
+    slider2Value.textContent = slider2.value; // Update the display of slider2 value
+    
+    // Enable the sliders (optional, if you want sliders to be active immediately)
+    slider1.disabled = false;
+    slider2.disabled = false;
+    const sliderOne = document.getElementById('slider' + '1');
+    const sliderValueDisplayOne = document.getElementById('slider' + '1' + '-value');
+    sliderValueDisplayOne.textContent = sliderOne.value + ' (recommended)';
+    const sliderTwo = document.getElementById('slider' + '2');
+    const sliderValueDisplayTwo = document.getElementById('slider' + '2' + '-value');
+    sliderValueDisplayTwo.textContent = sliderTwo.value + ' (recommended)';
+}
+
+function updateSliderValue(sliderNum) {
+    const slider = document.getElementById('slider' + sliderNum);
+    const sliderValueDisplay = document.getElementById('slider' + sliderNum + '-value');
+    sliderValueDisplay.textContent = slider.value;
+}
+
+
 
 function handleUnrestrictedInputTypeSelection(current) {
-    
     const buttons = document.querySelectorAll('.input-button');
     
     // Deselect all buttons and apply 'dimmed' class
     buttons.forEach(button => {
-        
-      if (button !== current) {
-        button.classList.remove('active');
-        button.classList.remove('dimmed');
-        button.disabled = false;
-      }
-
-      
+        if (button !== current) {
+            button.classList.remove('active');
+            button.classList.remove('dimmed');
+            button.disabled = false;
+        }
     });
+
     if (current.value !== 'Custom') {
         current.classList.add('active');
     }
+    
+    // Handle range slider visibility and update values
+    const rangeSliderContainer = document.getElementById('range-slider-container');
+    
+    // If "Custom" is selected, hide the sliders
+    if (current.value === 'Custom') {
+        const slider1 = document.getElementById('slider1');
+        const slider2 = document.getElementById('slider2');
+        const slider1Label = document.getElementById('slider1-label');
+        const slider1Value = document.getElementById('slider1-value');
+        const slider2Label = document.getElementById('slider2-label');
+        const slider2Value = document.getElementById('slider2-value');
 
+        slider1.disabled = true;
+        slider2.disabled = true;
+        slider1Value.textContent = '';
+        slider2Value.textContent = '';
+        slider1Label.textContent = '';
+        slider2Label.textContent = '';
+
+    } else {
+        rangeSliderContainer.style.display = 'block';
+        
+        
+        
+        // Update the first slider with the values from the selected button
+        const slider1 = document.getElementById('slider1');
+        const slider1Label = document.getElementById('slider1-label');
+        const slider1Value = document.getElementById('slider1-value');
+        
+        slider1.min = 1;
+        slider1.max = current.getAttribute('data-n-max');
+        slider1.value = current.getAttribute('data-n');
+        slider1Label.textContent = current.getAttribute('data-input-name');
+        slider1Value.textContent = slider1.value; // Show initial value
+
+        // Update the second slider with the values from the selected button
+        const slider2 = document.getElementById('slider2');
+        const slider2Value = document.getElementById('slider2-value');
+        
+        slider2.min = 1;
+        slider2.max = current.getAttribute('data-a-max');
+        slider2.value = current.getAttribute('data-a');
+        slider2Value.textContent = slider2.value; // Show initial value
+        const sliderOne = document.getElementById('slider' + '1');
+        const sliderValueDisplayOne = document.getElementById('slider' + '1' + '-value');
+        sliderValueDisplayOne.textContent = sliderOne.value + ' (recommended)';
+        const sliderTwo = document.getElementById('slider' + '2');
+        const sliderValueDisplayTwo = document.getElementById('slider' + '2' + '-value');
+        sliderValueDisplayTwo.textContent = sliderTwo.value + ' (recommended)';
+        slider1.disabled = false;
+        slider2.disabled = false;
+    }
 }
 
-//  allow tabs in algorithm input textarea
-// document.getElementById('algInput').addEventListener('keydown', function(e) {
-    
-//     if (e.key === 'Tab') {
-//         e.preventDefault();
-//         let start = this.selectionStart;
-//         let end = this.selectionEnd;
 
-//         // Set textarea value to: text before caret + tab + text after caret
-//         this.value = this.value.substring(0, start) + "\t" + this.value.substring(end);
 
-//         // Put caret at right position again
-//         this.selectionStart = this.selectionEnd = start + 1;
-//     }
-// });
 
-// python formating in textarea
 
-    // Get the textarea element by its ID
-    
 
 
 // Get the textarea element by its ID
@@ -300,4 +378,6 @@ function returnToSetup() {
     window.location.href = '../../algorithms/alg_setup/';
 }
 
-myCodeMirror.setValue("Choose your Algorithm Type first");
+myCodeMirror.setValue("Choose your Algorithm Type first");//#endregion
+
+

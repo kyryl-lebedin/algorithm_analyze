@@ -80,7 +80,7 @@ textarea {
   .btn-secondary:focus {
     color: #333;
     text-shadow: none; /* Prevent inheritance from `body` */
-    background-color: #fff;
+    background-color: #dddddd;
     border: .05rem solid #fff;
   }
   
@@ -320,6 +320,7 @@ textarea {
   text-align: left;
  
   font-family: 'Garamond';
+  font-size: 18px;
   border-radius: 15px;
 
 }
@@ -404,3 +405,26 @@ ul {
   padding-left: 10px;       /* Removes any default left padding */
   margin-left: 10px;        /* Ensures the list is aligned to the left */
 }
+
+.slider-info {
+  font-family: 'Oswald-VariableFont';
+  font-size: 18px;
+ 
+}
+
+.dimmed-slider {
+  opacity: 0.5; /* This dims the slider */
+  pointer-events: none; /* Prevent interaction when dimmed */
+}
+
+/* For WebKit browsers (Chrome, Safari, etc.) */
+
+
+input[type="range"]::-webkit-slider-thumb {
+ /* Size of the moving ball */
+  background: #d89b18; /* Color of the moving ball */
+  /* Change cursor to pointer when hovering over the ball */
+}
+
+
+

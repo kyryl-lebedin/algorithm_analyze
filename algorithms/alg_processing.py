@@ -63,7 +63,8 @@ def function_validate(code_str):
 
 
 
-def algorithm_analyze(func, input_type):
+def algorithm_analyze(func, input_type, n, a):
+    
     pol_degree = 3
 
     
@@ -123,7 +124,7 @@ def algorithm_analyze(func, input_type):
     
 
 
-    def array_input(n_size=700, a_size=500):
+    def array_input(n_size=n, a_size=a):
         sizes = list(range(1, n_size))
         test_lists = []
 
@@ -133,7 +134,7 @@ def algorithm_analyze(func, input_type):
 
         return sizes, test_lists
     
-    def array_index_input(n_size=700, a_size=500):
+    def array_index_input(n_size=n, a_size=a):
         sizes = list(range(1, n_size))
         test_lists_indexes_pairs = []
         
@@ -149,7 +150,7 @@ def algorithm_analyze(func, input_type):
         
         return sizes, test_lists_indexes_pairs
     
-    def matrix_input(n_size=500, a_size=200):
+    def matrix_input(n_size=n, a_size=a):
         sizes = list(range(1, n_size))
         test_matrices = []
 
@@ -159,7 +160,7 @@ def algorithm_analyze(func, input_type):
         
         return sizes, test_matrices
     
-    def graph_matrix_input(n_size=500, a_size=1):
+    def graph_matrix_input(n_size=n, a_size=a):
         sizes = list(range(1, n_size))
         test_matrices = []
 
@@ -241,7 +242,10 @@ def algorithm_analyze(func, input_type):
     return buf, predictions, cls_sign
 
 
-input_types = ['array', 'array & random index', 'nxn matrix', 'simple graph (adjacency matrix)']
+input_types = {'array': ['Array size', 700, 500, 699, 499], 
+               'array & random index': ['Array size', 700, 500, 699, 499], 
+               'nxn matrix': ['Matrix size', 500, 200, 499, 199], 
+               'simple graph (adjacency matrix)': ['Number of vertices', 500, 1, 499, 1]}
 
 
 
@@ -296,7 +300,7 @@ algorithm_types = {
         'algorithms': [],
         'template':
 """def your_custom_algorithm(input):
-    # Type your your code here, or select algorithm example :)
+    # Type your your code here :)
 """
     }
 
