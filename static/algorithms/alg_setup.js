@@ -131,6 +131,8 @@ function handleCodeSubmission(event) {
         document.getElementById('input-selection-form').style.display = 'none';
         document.getElementById('algorithmForm').style.display = 'none';
         document.getElementById('analyze-button-form').style.display = 'none';
+        document.getElementById('range-slider-container').style.display = 'none';
+        document.getElementById('analyze-button').style.display = 'none';
     
         // Handle and display the image
         const imageElement = document.getElementById('imageElement');
@@ -176,6 +178,9 @@ function handleCodeSubmission(event) {
             predictionsElement.innerHTML += secondaryResultsText;
         }
         predictionsElement.style.display = 'block'; // Show the predictions text
+        document.getElementById('return-button').style.display = 'block'; // Show the return button
+        document.getElementById('imageElement').style.display = 'block';
+
 
     })
     
@@ -231,6 +236,8 @@ function handleInputTypeSelection(current) {
         }
     });
     
+    document.getElementById('algorithmSelect').disabled = false;
+
     // Activate the selected button and remove 'dimmed' class
     current.disabled = true;
     current.classList.add('active');
@@ -254,10 +261,13 @@ function handleInputTypeSelection(current) {
     // Update the second slider with the values from the selected button
     const slider2 = document.getElementById('slider2');
     const slider2Value = document.getElementById('slider2-value');
+    const slider2Label = document.getElementById('slider2-label');
+
     
     slider2.min = 1;
     slider2.max = current.getAttribute('data-a-max');
     slider2.value = current.getAttribute('data-a');
+    slider2Label.textContent = slider2Label.getAttribute('data-input-name');
     slider2Value.textContent = slider2.value; // Update the display of slider2 value
     
     // Enable the sliders (optional, if you want sliders to be active immediately)
@@ -309,10 +319,11 @@ function handleUnrestrictedInputTypeSelection(current) {
 
         slider1.disabled = true;
         slider2.disabled = true;
-        slider1Value.textContent = '';
-        slider2Value.textContent = '';
-        slider1Label.textContent = '';
-        slider2Label.textContent = '';
+        document.getElementById('algorithmSelect').disabled = true;
+        slider1Value.textContent = 'N';
+        slider2Value.textContent = 'A';
+        slider1Label.textContent = 'N Size';
+        slider2Label.textContent = 'A Range';
 
     } else {
         rangeSliderContainer.style.display = 'block';
@@ -367,8 +378,11 @@ var myCodeMirror = CodeMirror.fromTextArea(myTextArea, {
     matchBrackets: true,      // Highlight matching brackets
     autoCloseBrackets: true,
     readOnly: true,
+    lineWrapping: false,
+    
 });
 
+myCodeMirror.setSize("97%", "100%");
     
 
 // bae16-light, duotone-light, juejin, paraiso-light, solarized light, yeti, cobalt
