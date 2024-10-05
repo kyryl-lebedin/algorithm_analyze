@@ -6,12 +6,11 @@ p.lead {
   font-size: 2vw; /* Adjust this value for appropriate scaling */
 }
 
-
 .typing {
   font-family: monospace;
   white-space: nowrap;
   overflow: hidden;
-  border-right: .15em solid #fff; /* Typing cursor */
+  border-right: 0.15em solid #fff; /* Typing cursor */
   animation: blink-caret 0.75s step-end infinite;
 }
 

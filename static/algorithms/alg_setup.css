@@ -1,6 +1,6 @@
 main {
   flex: 1;
-  padding: 20px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,25 +21,26 @@ body {
   -ms-flex-pack: center;
   -webkit-box-pack: center;
   color: #fff;
-  text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
 }
 
 .content-box {
-  background-color: #dcdcdce8;
+  background-color: #999999bd;
   border-radius: 15px;
-  border: #000000 solid 1px;
+  border: #717171 solid 4px;
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.644);
   width: 90%; /* Set width to 80% of the screen */
-  height: 80vh;
+  height: 100%; /* Set height to 80% of the screen */
   padding: 20px;
+  /* margin-top: 0px; */
   display: flex;
   flex-direction: row; /* Ensure flex layout is maintained */
   justify-content: space-between; /* Distribute space between left and right sides */
   overflow: auto;
 }
 
-.left-side{
+.left-side {
   flex: 1.7;
   padding: 20px;
   border-right: 1px solid #dee2e6;
@@ -51,13 +52,13 @@ body {
 
 .right-side {
   flex: 1.3;
+
   margin-left: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between; /* Space between form elements and the button */
   /* Center horizontally */
   height: 100%; /* Ensure it takes full height */
-  
 }
 
 .analyze-button-container {
@@ -65,11 +66,30 @@ body {
   height: 100%; /* Make sure the container has a height */
 }
 
+.back-button-container {
+  display: none;
+  position: relative;
+  height: 100%; /* Make sure the container has a height */
+}
+
 #analyze-button {
   position: absolute;
-  top: 33%; /* Position the button 2/3 from the top */
+  top: 40%; /* Position the button 2/3 from the top */
   left: 50%;
   transform: translate(-50%, -50%); /* Center the button horizontally */
+  width: 30%; /* 20% of the container's width */
+  font-size: calc(10px + 1vw); /* Adjust font size relative to viewport */
+  padding: 10px;
+}
+
+#return-button {
+  position: absolute;
+  top: 20%; /* Position the button 2/3 from the top */
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the button horizontally */
+  width: 40%; /* 20% of the container's width */
+  font-size: calc(10px + 1vw); /* Adjust font size relative to viewport */
+  padding: 10px; /* Center the button horizontally */
 }
 
 #algInput {
@@ -80,78 +100,67 @@ body {
 }
 
 #imageElement {
-  width: 100%; 
+  width: 100%;
   height: 100%; /* Make image take 100% of the height and width of its container */
   object-fit: contain; /* Maintain aspect ratio of the image */
 }
 
-
-
-header, footer {
- 
- 
+header,
+footer {
   text-align: center;
 }
 
+/* Centering and scaling content block */
 
+/* Add these styles in your 'index.css' */
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
-  
-  /* Centering and scaling content block */
+.blink-cursor::after {
+  content: "|";
+  animation: blink 1s step-end infinite;
+}
 
-  
-  
-  /* Add these styles in your 'index.css' */
-  @keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-  }
-  
-  .blink-cursor::after {
-    content: '|';
-    animation: blink 1s step-end infinite;
-  }
-  
-  .no-cursor::after {
-    content: '';
-    animation: none;
-  }
-  
-  /*
+.no-cursor::after {
+  content: "";
+  animation: none;
+}
+
+/*
    * Globals
    */
-  
-  /* Links */
-  a,
-  a:focus,
-  a:hover {
-    color: #fff;
-  }
-  
-  
-  
-  /* Custom default button */
-  .btn-secondary,
-  .btn-secondary:hover,
-  .btn-secondary:focus {
-    color: #333;
-    text-shadow: none; /* Prevent inheritance from `body` */
-    background-color: #dddddd;
-    border: .05rem solid #fff;
-  }
-  
-  
-  
-  
 
+/* Links */
+a,
+a:focus,
+a:hover {
+  color: #fff;
+}
 
-
+/* Custom default button */
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus {
+  color: #333;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #dddddd;
+  border: 0.05rem solid #fff;
+}
 
 @font-face {
-    font-family: 'Oswald-VariableFont';
-    src: url('Oswald/Oswald-VariableFont_wght.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Oswald-VariableFont";
+  src: url("Oswald/Oswald-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .alg-button {
@@ -162,36 +171,35 @@ header, footer {
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  font-family: 'Oswald-VariableFont';
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
 }
 
 .alg-button:hover {
   background-color: #ffea00; /* Background color when hovered */
 
-  color: #000000;            /* Font color when hovered */
+  color: #000000; /* Font color when hovered */
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 #analyze-button {
-  font-family: 'Oswald-VariableFont';
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
 }
 
 #anal_description {
-  font-family: 'Garamond';
+  margin-top: 30px;
+  font-family: "Garamond";
   font-size: 18px;
   color: #dddddd;
 }
 
 #info-button {
   position: absolute;
-  top: 10px;    /* Align near the top */
-  right: 10px;  /* Align near the right */
+  top: 10px; /* Align near the top */
+  right: 10px; /* Align near the right */
   z-index: 1000; /* Ensure it stays on top of other elements */
 }
-
-
 
 .btn-info {
   background-color: transparent !important; /* Always keep the background transparent */
@@ -204,29 +212,28 @@ header, footer {
 .btn-info:focus,
 .btn-info:active,
 .btn-info:focus:active {
-    background-color: transparent !important;  /* Keep background transparent on hover, focus, and active */
-    border: none !important;                   /* Ensure no border appears */
-    outline: none !important;                  /* Ensure no outline appears */
-    box-shadow: none !important;               /* Remove any shadow effect */
+  background-color: transparent !important; /* Keep background transparent on hover, focus, and active */
+  border: none !important; /* Ensure no border appears */
+  outline: none !important; /* Ensure no outline appears */
+  box-shadow: none !important; /* Remove any shadow effect */
 }
 
 .btn-info:focus {
-    outline: 0 !important;                     /* Special case for removing focus outline */
-    border-color: transparent !important;      /* Make sure the border color is transparent */
+  outline: 0 !important; /* Special case for removing focus outline */
+  border-color: transparent !important; /* Make sure the border color is transparent */
 }
 
 .btn-info:hover {
-  color: #d89b18; 
+  color: #d89b18;
 }
 
 .close {
-  border: none !important;                   /* Ensure no border appears */
+  border: none !important; /* Ensure no border appears */
   outline: none !important;
 }
 
-
 #return-button {
-  font-family: 'Oswald-VariableFont';
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
 }
 
@@ -241,7 +248,7 @@ header, footer {
 }
 
 .dropdown-toggle {
-  font-family: 'Oswald-VariableFont' ;
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
 }
 
@@ -253,12 +260,9 @@ header, footer {
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  font-family: 'Oswald-VariableFont';
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
-
 }
-
-
 
 .input-button.active {
   background-color: #d89b18; /* active color for input */
@@ -272,41 +276,58 @@ header, footer {
 
 .CodeMirror {
   text-align: left; /* Ensures text is aligned to the left */
-  width: 100%;      /* Ensure it uses full width of the container */
-  margin: 0 auto;   /* Centering the editor itself if needed */
+  width: 100%; /* Ensure it uses full width of the container */
+  margin: 0 auto; /* Centering the editor itself if needed */
   border: #000000 solid 1px; /* Add a border around the editor */
-  height: 100%;     /* Ensure it uses full height of the container */
-  overflow: auto;   /* Enable scrolling */
+  height: 100%; /* Ensure it uses full height of the container */
+  overflow: auto; /* Enable scrolling */
   white-space: pre; /* Prevent word wrapping */
   margin-left: 10px;
-  
+  overflow: auto;
 }
 
+#waitText {
+  font-family: "Oswald-VariableFont";
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+#waitText2 {
+  font-family: "Oswald-VariableFont";
+  font-size: 18px;
+}
 
 .code-container {
-  width: 100%;              /* Set the width of the container */
-  height: 100%;             /* Set the height of the container */      /* Set a maximum height or a fixed height if desired */
-  overflow: auto;           /* Enable scroll when content exceeds container size */
+  width: 100%; /* Set the width of the container */
+  height: 100%; /* Set the height of the container */ /* Set a maximum height or a fixed height if desired */
+  overflow: auto; /* Enable scroll when content exceeds container size */
   /* Optional: Add a border around the container */
-             /* Optional: Add some padding */
-  box-sizing: border-box;   /* Ensure padding doesn't affect the width/height */
+  /* Optional: Add some padding */
+  box-sizing: border-box; /* Ensure padding doesn't affect the width/height */
 }
 
 #return-button {
-  font-family: 'Oswald-VariableFont';
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
   width: fit-content;
 }
 
 #infoModal .modal-body {
-  margin-left: 20px;  /* Adjust the left margin */
+  margin-left: 20px; /* Adjust the left margin */
   margin-right: 20px; /* Adjust the right margin */
 }
-
 
 .modal-dialog {
   max-width: 55%;
   margin: 1.75rem auto;
+}
+
+/* center the text area */
+#code_errors {
+  font-family: "Garamond";
+  font-size: 18px;
+  color: #ff0000;
+  text-align: center;
 }
 
 .modal-content {
@@ -315,32 +336,27 @@ header, footer {
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.644);
   align-items: left;
   text-align: left;
- 
-  font-family: 'Garamond';
+
+  font-family: "Garamond";
   font-size: 18px;
   border-radius: 15px;
-
 }
 
 #infoModalLabel {
-  font-family: 'Oswald-VariableFont';
-  
-  color: #d89b18;
+  font-family: "Oswald-VariableFont";
 
+  color: #d89b18;
 }
 
 /* to review */
 
 .modal-header {
-  
   color: white; /* White text */
   border-bottom: 2px solid #68686875;
-  margin-left: 20px;  /* Indent from the left */
+  margin-left: 20px; /* Indent from the left */
   margin-right: 20px; /* Indent from the right */
   padding-bottom: 10px;
 }
-
-
 
 /* Customize the close button color */
 .modal-header .close {
@@ -352,61 +368,59 @@ header, footer {
   opacity: 1;
 }
 
+/* Style for the table */
+.custom-table {
+  width: 100%;
+  border-collapse: separate; /* Important to separate the cells */
+  border-spacing: 0; /* Reset any spacing between the cells */
+  border: 1.5px solid #68686875; /* Customize the outer border */
+  border-radius: 10px; /* Rounded corners for the table */
+  overflow: hidden; /* Ensures borders respect the rounded corners */
+}
 
-    /* Style for the table */
-    .custom-table {
-      width: 100%;
-      border-collapse: separate; /* Important to separate the cells */
-      border-spacing: 0; /* Reset any spacing between the cells */
-      border: 1.5px solid #68686875; /* Customize the outer border */
-      border-radius: 10px; /* Rounded corners for the table */
-      overflow: hidden; /* Ensures borders respect the rounded corners */
-  }
-  
-  /* Style for the table cells */
-  .custom-table th, .custom-table td {
-      border: 1px solid #68686875; /* Customize the color of cell borders */
-      padding: 10px;
-      text-align: left;
-  }
-  
-  /* Styling for the table header */
-  .custom-table th {
-      background-color: #4f4f4f; /* Header background color */
-      color: #ffffff; /* Header text color */
-  }
-  
-  /* Styling for the table body */
-  .custom-table td {
-      background-color: #333333; /* Body background color */
-      color: #ffffff; /* Text color */
-  }
-  
-  /* For custom hover effect */
-  .custom-table tbody tr:hover {
-      background-color: #f9f9f9;
-  }
+/* Style for the table cells */
+.custom-table th,
+.custom-table td {
+  border: 1px solid #68686875; /* Customize the color of cell borders */
+  padding: 10px;
+  text-align: left;
+}
 
+/* Styling for the table header */
+.custom-table th {
+  background-color: #4f4f4f; /* Header background color */
+  color: #ffffff; /* Header text color */
+}
+
+/* Styling for the table body */
+.custom-table td {
+  background-color: #333333; /* Body background color */
+  color: #ffffff; /* Text color */
+}
+
+/* For custom hover effect */
+.custom-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
 
 /* style h3 tag */
 
 #infoModal h3 {
-  font-family: 'Oswald-VariableFont';
-  
+  font-family: "Oswald-VariableFont";
+
   color: #d89b18;
   text-align: center;
 }
 
 ul {
   list-style-type: none; /* Removes bullet points */
-  padding-left: 10px;       /* Removes any default left padding */
-  margin-left: 10px;        /* Ensures the list is aligned to the left */
+  padding-left: 10px; /* Removes any default left padding */
+  margin-left: 10px; /* Ensures the list is aligned to the left */
 }
 
 .slider-info {
-  font-family: 'Oswald-VariableFont';
+  font-family: "Oswald-VariableFont";
   font-size: 18px;
- 
 }
 
 .dimmed-slider {
@@ -416,18 +430,16 @@ ul {
 
 /* For WebKit browsers (Chrome, Safari, etc.) */
 
-
 input[type="range"]::-webkit-slider-thumb {
- /* Size of the moving ball */
+  /* Size of the moving ball */
   background: #d89b18; /* Color of the moving ball */
   /* Change cursor to pointer when hovering over the ball */
-  border:#000000 solid 1px;
+  border: #000000 solid 1px;
 }
 
 #range-slider-container {
-  
   margin: 0 auto;
-  width: 100% /* Ensure the slider container takes 100% width of left-side */
+  width: 100%; /* Ensure the slider container takes 100% width of left-side */
 }
 
 .form-group {
@@ -439,14 +451,17 @@ input[type="range"]::-webkit-slider-thumb {
   display: block;
   text-align: left;
   margin-bottom: 0px; /* Controls distance between label and slider */
-  
+  color: rgb(255, 255, 255);
+  font-size: 16px;
+  font-family: Oswald-VariableFont;
+  /* make bold */
+  font-weight: bold;
 }
 
 .custom-range {
   width: 100%;
   margin-bottom: 0px; /* Controls distance between slider and value */
 }
-
 
 #slider1-value,
 #slider2-value {
@@ -456,7 +471,6 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .form-group label {
-  
   left: 0; /* Pushes the label to the very left */
   top: -20px; /* Adjusts vertical position */
 }
@@ -467,18 +481,17 @@ input[type="range"]::-webkit-slider-thumb {
   margin: 0 auto;
 }
 
-
-
 /* header */
 .header-wrapper {
   position: relative;
-  width: 50%; /* 2/3 of the page width */
+  width: 45%; /* 2/3 of the page width */
   margin-right: 50%; /* Start at 1/3 from the left */
   display: flex;
   justify-content: center; /* Centers horizontally */
   align-items: center; /* Centers vertically */
-   /* Full viewport height for centering vertically */
-  margin-top: 10px;
+  /* Full viewport height for centering vertically */
+  padding: 20px;
+  margin-bottom: 0;
 }
 
 header h3 {
@@ -487,7 +500,12 @@ header h3 {
 }
 
 .mastfoot {
-  color: rgba(255, 255, 255, .5);
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px; /* Adjust this value as needed */
+  margin-bottom: 0px; /* Set this to 0 to make it touch the next block */
 }
 
 .btn-label {
@@ -499,9 +517,8 @@ header h3 {
 }
 
 #input-selection-form {
-  margin-top:20px;
+  margin-top: 20px;
 }
-
 
 /* Style the dropdown like the buttons */
 #algorithmSelect {
@@ -511,14 +528,9 @@ header h3 {
   padding: 5px;
   margin: 5px;
   cursor: pointer;
-  font-family: 'Oswald-VariableFont'; /* Use the same font */
+  font-family: "Oswald-VariableFont"; /* Use the same font */
   font-size: 18px; /* Match font size */
   transition: background-color 0.3s, color 0.3s;
-}
-
-#algorithmSelect:hover {
-  background-color: #ffea00; /* Match hover background color of the button */
-  color: #000000; /* Match hover text color */
 }
 
 #algorithmSelect:disabled {
@@ -529,7 +541,7 @@ header h3 {
 
 /* Optional: Additional style for dropdown icon */
 #algorithmSelect::after {
-  content: '▼'; /* Custom dropdown arrow */
+  content: "▼"; /* Custom dropdown arrow */
   position: absolute;
   right: 10px;
   pointer-events: none; /* Prevent interaction with the icon */

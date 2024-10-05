@@ -10,6 +10,7 @@ import threading
 import string
 import joblib   
 
+
 def get_function_object(code_str):
     function_valid = function_validate(code_str)
     if function_valid != 1:
@@ -59,7 +60,7 @@ def function_validate(code_str):
 
 
 
-    
+run = True
 
 
 
@@ -144,6 +145,7 @@ def algorithm_analyze(func, input_type, n, a):
             random_index = random.randint(0, size-1)
             pair = [test_list, random_index]
             test_lists_indexes_pairs.append(pair)
+            
  
 
         
@@ -191,11 +193,33 @@ def algorithm_analyze(func, input_type, n, a):
 
     #     return sizes, test_strings
 
-    def measure_times(function, test_input):
-        
-        times = []
+    
 
+
+
+    def print_i(stop_event):
+        while not stop_event.is_set():
+            print('i')
+            time.sleep(2)
+
+    def measure_times(function, test_input):
+        global run
+
+        # Create a stop event for the printer thread
+        stop_event = threading.Event()
+        
+        # Start the parallel thread for printing 'i'
+        printer_thread = threading.Thread(target=print_i, args=(stop_event,), daemon=True)
+        printer_thread.start()
+
+        times = []
+        start = time.time()
         for test_list in test_input:
+            elapsed_time = time.time() - start
+            if elapsed_time > 60:
+                print("Time limit exceeded.")
+                break
+            
             start_time = time.perf_counter()
             if input_type == 'array & random index':
                 function(*test_list)
@@ -206,9 +230,17 @@ def algorithm_analyze(func, input_type, n, a):
             elapsed_time = end_time - start_time
             times.append(elapsed_time)
 
+        # Signal the printer thread to stop
+        stop_event.set()
+
+        # Wait for the printer thread to finish
+        printer_thread.join()
+        print('done')
         return times
+
+
     
-    cls_sign = ['O(1)', 'O(n)', 'O(log(n))', 'O(nlog(n))', 'O(n^a)']
+    cls_sign = ['O(1)', 'O(n)', 'O(log(n))', 'O(nlog(n))', 'O(n<sup>a</sup>)']
     classes = ['constant', 'linear', 'logarithmic', 'log linear', 'polynomial']
     def model_prediction(coefficients):
         loaded_model = joblib.load('model/random_forest_model.pkl')
@@ -250,6 +282,15 @@ input_types = {'array': ['Array size', 700, 500, 699, 499],
 
 
 algorithm_types = { 
+        'Custom': {
+        'input_type': 'Custom',
+        'algorithms': [],
+        'template':
+"""def your_custom_algorithm(  ):
+    # Type your your code here :)
+"""
+    },
+
     'Sorting': {
         'input_type': 'array',
         'algorithms': ['bubble sort', 'selection sort', 'quick sort', 'merge sort'],
@@ -279,30 +320,23 @@ algorithm_types = {
 
     'Matrix': {
         'input_type': 'nxn matrix',
-        'algorithms': ['matrix transpose', 'frobenius norn'],
+        'algorithms': ['matrix transpose', 'frobenius norm'],
         'template':
 """def your_matrix_algorithm(matrix):
     # Type your your code here, or select algorithm example :)
 """
     },
 
-    'Graph': {
-        'input_type': 'simple graph (adjacency matrix)',
-        'algorithms': ['depth first search', 'breadth first search', 'dijkstra'],
-        'template':
-"""def your_graph_algorithm(graph, start):
-    # Type your your code here, or select algorithm example :)
-"""
-    },
+#     'Graph': {
+#         'input_type': 'simple graph (adjacency matrix)',
+#         'algorithms': ['depth first search', 'breadth first search', 'dijkstra'],
+#         'template':
+# """def your_graph_algorithm(graph, start):
+#     # Type your your code here, or select algorithm example :)
+# """
+#    },
 
-    'Custom': {
-        'input_type': 'Custom',
-        'algorithms': [],
-        'template':
-"""def your_custom_algorithm(input):
-    # Type your your code here :)
-"""
-    }
+
 
 }
 
@@ -370,32 +404,44 @@ algorithms = {
     'quick select': """def quick_select(arr, k):
     if len(arr) == 1:
         return arr[0]
+
     pivot = arr[len(arr) // 2]
+    
     left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
-    m = len(left)
-    if k < m:
+
+    if k < len(left):
         return quick_select(left, k)
-    elif k > m:
-        return quick_select(right, k-m-1)
+    elif k < len(left) + len(middle):
+        return middle[0]
     else:
-        return pivot
+        return quick_select(right, k - len(left) - len(middle))
+
 """,
     'median of medians': """def median_of_medians(arr, k):
     if len(arr) <= 5:
         arr.sort()
         return arr[k]
-    medians = [median_of_medians(arr[i:i+5], 2) for i in range(0, len(arr), 5)]
+
+    # Divide the array into chunks of 5 and find the medians of each chunk
+    medians = [median_of_medians(arr[i:i+5], len(arr[i:i+5]) // 2) for i in range(0, len(arr), 5)]
+    
+    # Find the median of the medians
     pivot = median_of_medians(medians, len(medians) // 2)
+    
+    # Partition the array into three parts: less than, equal to, and greater than pivot
     left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
     right = [x for x in arr if x > pivot]
-    m = len(left)
-    if k < m:
+    
+    if k < len(left):
         return median_of_medians(left, k)
-    elif k > m:
-        return median_of_medians(right, k-m-1)
-    else:
+    elif k < len(left) + len(middle):
         return pivot
+    else:
+        return median_of_medians(right, k - len(left) - len(middle))
+
         """,
 
     'matrix transpose': """def matrix_transpose(matrix):
@@ -410,27 +456,30 @@ algorithms = {
     return sum(sum(x**2 for x in row) for row in matrix) ** 0.5
         """,
 
-    'depth first search': """def dfs(graph, start):
-    visited = set()
-    stack = [start]
-    while stack:
-        vertex = stack.pop()
-        if vertex not in visited:
-            visited.add(vertex)
-            stack.extend(graph[vertex] - visited)
-    return visited
-        """,
+    # 'depth first search': """def dfs(graph, start):
+    # visited = set()
+    # stack = [start]
+    # while stack:
+    #     vertex = stack.pop()
+    #     if vertex not in visited:
+    #         visited.add(vertex)
+    #         stack.extend(graph[vertex] - visited)
+    # return visited
+    #     """,
 
-    'breadth first search': """def bfs(graph, start):
-    visited = set()
-    queue = [start]
-    while queue:
-        vertex = queue.pop(0)
-        if vertex not in visited:
-            visited.add(vertex)
-            queue.extend(graph[vertex] - visited)
-    return visited
-        """,
+    # 'breadth first search': """def bfs(graph):
+    # visited = set()
+    # queue = [0]  # Assuming the BFS starts from node 0
+    # while queue:
+    #     vertex = queue.pop(0)
+    #     if vertex not in visited:
+    #         visited.add(vertex)
+    #         # Extend the queue with all neighbors of vertex that have not been visited
+    #         for neighbor, is_connected in enumerate(graph[vertex]):
+    #             if is_connected == 1 and neighbor not in visited:
+    #                 queue.append(neighbor)
+    # return visited
+    #     """,
 
     'dijkstra': """def dijkstra(graph, start):
     distances = {vertex: float('infinity') for vertex in graph}

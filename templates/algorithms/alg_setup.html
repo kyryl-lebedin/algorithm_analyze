@@ -1,282 +1,467 @@
 {% load static %}
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
 
     <title>Algorithm.analyze</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
     <script src="{% static 'main/index.js' %}" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="{% static 'algorithms/alg_setup.css' %}">
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{% static 'algorithms/alg_setup.css' %}" />
     <script src="{% static 'algorithms/alg_setup.js' %}" defer></script>
     <!-- python like code -->
     <!-- Include CodeMirror CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.css"
+    />
     <!-- Optional: Add a theme for CodeMirror -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/duotone-light.min.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/base16-light.min.css">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/juejin.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/paraiso-light.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/solarizedLight.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/yeti.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/duotone-light.min.css"
+    />
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/base16-light.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/juejin.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/paraiso-light.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/solarizedLight.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/theme/yeti.min.css"
+    />
 
     <!-- Include CodeMirror JS core -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/codemirror.min.js"></script>
     <!-- Include Python mode for syntax highlighting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.1/mode/python/python.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap"
+      rel="stylesheet"
+    />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="../../static/favicon/favicon.ico" />
   </head>
 
-    <header>
-      <div class="header-wrapper">
-        {% if is_home_page %}
-          <h3>algorithm.analyze</h3>
-        {% else %}
-          <h3 id="header-text"></h3>
-        {% endif %}
+  <header>
+    <div class="header-wrapper">
+      {% if is_home_page %}
+      <h3 style="font-size: 2rem">algorithm.analyze</h3>
+      {% else %}
+      <h3 id="header-text" style="font-size: 2rem"></h3>
+      {% endif %}
+    </div>
+  </header>
+  <main>
+    <div class="waiting-box text-center" style="display: none">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
-    </header>
-    <main>
+      <p id="waitText"></p>
+    </div>
 
-      <div class="content-box" style="position: relative;">
-        <div class="left-side">
-          <img id="imageElement"  style="width:100%;  display: none;">
-          <form id="analyze-button-form" style="height: 100%;">
-            <textarea id="algInput" name="algInput"></textarea>
-            <p id="code_errors"></p>
-          </form>
+    <div class="content-box" style="position: relative">
+      <div class="left-side">
+        <img id="imageElement" style="width: 100%; display: none" />
+        <form id="analyze-button-form" style="height: 100%">
+          <textarea id="algInput" name="algInput"></textarea>
+          <p id="code_errors"></p>
+        </form>
 
-          <div id="range-slider-container" >
-            <div class="form-group">
-              <label id="slider1-label" class="slider-info">N size</label> 
-              <input type="range" class="custom-range" id="slider1" oninput="updateSliderValue(1)" disabled>
-              <span id="slider1-value" class="slider-info">n</span> <!-- This will display slider1's current value -->
-            </div>
-            <div class="form-group">
-              <label id="slider2-label" class="slider-info" data-input-name="N range">A range</label> 
-              <input type="range" class="custom-range" id="slider2"  oninput="updateSliderValue(2)" disabled>
-              <span id="slider2-value" class="slider-info">a</span> <!-- This will display slider2's current value -->
-            </div>
+        <div id="range-slider-container">
+          <div class="form-group">
+            <label id="slider1-label" class="slider-info">N size</label>
+            <input
+              type="range"
+              class="custom-range"
+              id="slider1"
+              oninput="updateSliderValue(1)"
+              disabled
+            />
+            <span id="slider1-value" class="slider-info">n</span>
+            <!-- This will display slider1's current value -->
           </div>
-
+          <div class="form-group">
+            <label
+              id="slider2-label"
+              class="slider-info"
+              data-input-name="N range"
+              >A range</label
+            >
+            <input
+              type="range"
+              class="custom-range"
+              id="slider2"
+              oninput="updateSliderValue(2)"
+              disabled
+            />
+            <span id="slider2-value" class="slider-info">a</span>
+            <!-- This will display slider2's current value -->
+          </div>
         </div>
-        
-        <div class="right-side">
+      </div>
 
-          <!-- hidden part -->
-          <p id="anal_description" style="display: none;" ></p>
-          <button type="button" style="display: none;" class="btn btn-outline-warning" id="return-button" onclick="returnToSetup()">Back</button>
+      <div class="right-side">
+        <!-- Info button -->
+        <button
+          type="button"
+          class="btn btn-info"
+          data-toggle="modal"
+          id="info-button"
+          data-target="#infoModal"
+        >
+          <i class="bi bi-info-circle"></i>
+          <!-- Font Awesome info icon -->
+        </button>
 
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="infoModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="infoModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="infoModalLabel">Information</h5>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>
+                  The model uses a <strong>Random Forest</strong> algorithm for
+                  training. The selected features are the coefficients of a
+                  third-degree polynomial, fitted to the size-time graph to
+                  represent the complexity of various algorithms.
+                </p>
+                <p>
+                  To standardize the data, it was normalized by removing the
+                  mean and scaling it to unit variance. The training data was
+                  generated from various algorithms and randomized to eliminate
+                  statistical bias. Model was tested on 20% of data. The model
+                  is trained to classify into only five main complexity classes:
+                </p>
+                <ul>
+                  <li>Constant</li>
+                  <li>Linear</li>
+                  <li>Polynomial</li>
+                  <li>Logarithmic</li>
+                  <li>Log-linear</li>
+                </ul>
+                <p>
+                  <strong>Note:</strong> This model is not trained to recognize
+                  any other classes beyond the five listed above.
+                </p>
 
+                <h5>Model Performance:</h5>
+                <table class="custom-table">
+                  <thead>
+                    <tr>
+                      <th>Class</th>
+                      <th>Precision</th>
+                      <th>Recall</th>
+                      <th>F1-Score</th>
+                      <th>Support</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>0 (Constant)</td>
+                      <td>1.00</td>
+                      <td>1.00</td>
+                      <td>1.00</td>
+                      <td>32</td>
+                    </tr>
+                    <tr>
+                      <td>1 (Linear)</td>
+                      <td>0.98</td>
+                      <td>0.91</td>
+                      <td>0.94</td>
+                      <td>45</td>
+                    </tr>
+                    <tr>
+                      <td>2 (Polynomial)</td>
+                      <td>0.95</td>
+                      <td>0.95</td>
+                      <td>0.95</td>
+                      <td>42</td>
+                    </tr>
+                    <tr>
+                      <td>3 (Logarithmic)</td>
+                      <td>0.97</td>
+                      <td>0.97</td>
+                      <td>0.97</td>
+                      <td>39</td>
+                    </tr>
+                    <tr>
+                      <td>4 (Log-linear)</td>
+                      <td>0.91</td>
+                      <td>0.98</td>
+                      <td>0.94</td>
+                      <td>42</td>
+                    </tr>
+                  </tbody>
+                </table>
 
+                <br />
+                <p>
+                  <strong>Overall Accuracy:</strong>
+                  <strong style="color: yellow; font-weight: bold">0.96</strong>
+                </p>
+                <p>
+                  <strong>Macro Average:</strong> 0.96 precision, 0.96 recall,
+                  0.96 F1-score
+                </p>
+                <p>
+                  <strong>Weighted Average:</strong> 0.96 precision, 0.96
+                  recall, 0.96 F1-score
+                </p>
 
-                        <!-- Info button -->
-          <button  type="button" class="btn btn-info" data-toggle="modal" id="info-button" data-target="#infoModal">
-          <i class="bi bi-info-circle"></i> <!-- Font Awesome info icon -->
-          </button>
-    
-          <!-- Modal -->
-          <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="infoModalLabel">Information</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        
-                        <p>The model uses a <strong>Random Forest</strong> algorithm for training. The selected features are the coefficients of a third-degree polynomial, fitted to the size-time graph to represent the complexity of various algorithms.</p>
-                        <p>To standardize the data, it was normalized by removing the mean and scaling it to unit variance. The training data was generated from various algorithms and randomized to eliminate statistical bias. Model was tested on 20% of data. The model is trained to classify into only five main complexity classes:</p>
-                        <ul>
-                            <li>Constant</li>
-                            <li>Linear</li>
-                            <li>Polynomial</li>
-                            <li>Logarithmic</li>
-                            <li>Log-linear</li>
-                        </ul>
-                        <p><strong>Note:</strong> This model is not trained to recognize any other classes beyond the five listed above. </p>
-                        
-                        <h5>Model Performance:</h5>
-                        <table class="custom-table">
-                          <thead>
-                              <tr>
-                                  <th>Class</th>
-                                  <th>Precision</th>
-                                  <th>Recall</th>
-                                  <th>F1-Score</th>
-                                  <th>Support</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr>
-                                  <td>0 (Constant)</td>
-                                  <td>1.00</td>
-                                  <td>1.00</td>
-                                  <td>1.00</td>
-                                  <td>32</td>
-                              </tr>
-                              <tr>
-                                  <td>1 (Linear)</td>
-                                  <td>0.98</td>
-                                  <td>0.91</td>
-                                  <td>0.94</td>
-                                  <td>45</td>
-                              </tr>
-                              <tr>
-                                  <td>2 (Polynomial)</td>
-                                  <td>0.95</td>
-                                  <td>0.95</td>
-                                  <td>0.95</td>
-                                  <td>42</td>
-                              </tr>
-                              <tr>
-                                  <td>3 (Logarithmic)</td>
-                                  <td>0.97</td>
-                                  <td>0.97</td>
-                                  <td>0.97</td>
-                                  <td>39</td>
-                              </tr>
-                              <tr>
-                                  <td>4 (Log-linear)</td>
-                                  <td>0.91</td>
-                                  <td>0.98</td>
-                                  <td>0.94</td>
-                                  <td>42</td>
-                              </tr>
-                          </tbody>
-                      </table>
-                      
-                        <br>
-                        <p><strong>Overall Accuracy:</strong> <strong style="color: yellow; font-weight: bold;">0.96</strong></p>
-                        <p><strong>Macro Average:</strong> 0.96 precision, 0.96 recall, 0.96 F1-score</p>
-                        <p><strong>Weighted Average:</strong> 0.96 precision, 0.96 recall, 0.96 F1-score</p>
-    
-                        <h3>Algorithm Type</h3>
-                        <p>Select the algorithm type you wish to analyze. You can choose from pre-defined types, which come with specific inputs, or write a custom algorithm and choose the input format that suits your needs.</p>
-    
-                        <h3>Input Type</h3>
-                        <ul>
-                            <li><strong>Array:</strong> Python list with random numbers.</li>
-                            <li><strong>Array & Random Index:</strong> Python list with an additional random index within the range of the list.</li>
-                            <li><strong>nxn Matrix:</strong> List of n lists, each containing random numbers, where the size is n.</li>
-                            <li><strong>Simple Graph:</strong> Adjacency matrix representing a graph.</li>
-                        </ul>
-    
-                        <h3>Input Size</h3>
-                        <p>You can modify the input size to observe how it influences the runtime of algorithms. For complex algorithms, such as those with exponential, higher polynomial, or factorial complexities, it is recommended to reduce the input size to avoid exceeding time limits. For these cases, an input size of <strong>5-20</strong> is optimal.</p>
-    
-                        <h3>Example Algorithms</h3>
-                        <p>Here are popular algorithms from each category for testing the model. Expected time complexities are provided:</p>
-    
-                        <h5>Sorting Algorithms:</h5>
-                        <ul>
-                            <li><strong>Bubble Sort:</strong> Polynomial (O(n²))</li>
-                            <li><strong>Selection Sort:</strong> Polynomial (O(n²))</li>
-                            <li><strong>Quick Sort:</strong> Log-linear (O(n log n) on average, O(n²) worst case)</li>
-                            <li><strong>Merge Sort:</strong> Log-linear (O(n log n))</li>
-                        </ul>
-    
-                        <h5>Searching Algorithms:</h5>
-                        <ul>
-                            <li><strong>Linear Search:</strong> Linear (O(n))</li>
-                            <li><strong>Binary Search:</strong> Logarithmic (O(log n))</li>
-                        </ul>
-    
-                        <h5>Selecting Algorithms:</h5>
-                        <ul>
-                            <li><strong>Quick Select:</strong> Linear (O(n) on average, O(n²) worst case)</li>
-                            <li><strong>Median of Medians:</strong> Linear (O(n))</li>
-                        </ul>
-    
-                        <h5>Matrix Algorithms:</h5>
-                        <ul>
-                            <li><strong>Matrix Transpose:</strong> Linear (O(n²)) where n is the size of the matrix (nxn)</li>
-                            <li><strong>Frobenius Norm:</strong> Linear (O(n²)) where n is the size of the matrix (nxn)</li>
-                        </ul>
-    
-                        <h5>Graph Algorithms:</h5>
-                        <ul>
-                            <li><strong>Depth First Search (DFS):</strong> Linear (O(V + E)) where V is vertices and E is edges.</li>
-                            <li><strong>Breadth First Search (BFS):</strong> Linear (O(V + E))</li>
-                            <li><strong>Dijkstra's Algorithm:</strong> Log-linear (O((V + E) log V)) with priority queue optimization</li>
-                        </ul>
-                    </div>
-                </div>
+                <h3>Algorithm Type</h3>
+                <p>
+                  Select the algorithm type you wish to analyze. You can choose
+                  from pre-defined types, which come with specific inputs, or
+                  write a custom algorithm and choose the input format that
+                  suits your needs.
+                </p>
+
+                <h3>Input Type</h3>
+                <ul>
+                  <li>
+                    <strong>Array:</strong> Python list with random numbers.
+                  </li>
+                  <li>
+                    <strong>Array & Random Index:</strong> Python list with an
+                    additional random index within the range of the list.
+                  </li>
+                  <li>
+                    <strong>nxn Matrix:</strong> List of n lists, each
+                    containing random numbers, where the size is n.
+                  </li>
+                  <li>
+                    <strong>Simple Graph:</strong> Adjacency matrix representing
+                    a graph.
+                  </li>
+                </ul>
+
+                <h3>Input Size</h3>
+                <p>
+                  You can modify the input size to observe how it influences the
+                  runtime of algorithms. For complex algorithms, such as those
+                  with exponential, higher polynomial, or factorial
+                  complexities, it is recommended to reduce the input size to
+                  avoid exceeding time limits. For these cases, an input size of
+                  <strong>5-20</strong> is optimal.
+                </p>
+
+                <h3>Example Algorithms</h3>
+                <p>
+                  Here are popular algorithms from each category for testing the
+                  model. Expected time complexities are provided:
+                </p>
+
+                <h5>Sorting Algorithms:</h5>
+                <ul>
+                  <li><strong>Bubble Sort:</strong> Polynomial (O(n²))</li>
+                  <li><strong>Selection Sort:</strong> Polynomial (O(n²))</li>
+                  <li>
+                    <strong>Quick Sort:</strong> Log-linear (O(n log n) on
+                    average, O(n²) worst case)
+                  </li>
+                  <li><strong>Merge Sort:</strong> Log-linear (O(n log n))</li>
+                </ul>
+
+                <h5>Searching Algorithms:</h5>
+                <ul>
+                  <li><strong>Linear Search:</strong> Linear (O(n))</li>
+                  <li>
+                    <strong>Binary Search:</strong> Logarithmic (O(log n))
+                  </li>
+                </ul>
+
+                <h5>Selecting Algorithms:</h5>
+                <ul>
+                  <li>
+                    <strong>Quick Select:</strong> Linear (O(n) on average,
+                    O(n²) worst case)
+                  </li>
+                  <li><strong>Median of Medians:</strong> Linear (O(n))</li>
+                </ul>
+
+                <h5>Matrix Algorithms:</h5>
+                <ul>
+                  <li>
+                    <strong>Matrix Transpose:</strong> Linear (O(n²)) where n is
+                    the size of the matrix (nxn)
+                  </li>
+                  <li>
+                    <strong>Frobenius Norm:</strong> Linear (O(n²)) where n is
+                    the size of the matrix (nxn)
+                  </li>
+                </ul>
+
+                <h5>Graph Algorithms:</h5>
+                <ul>
+                  <li>
+                    <strong>Depth First Search (DFS):</strong> Linear (O(V + E))
+                    where V is vertices and E is edges.
+                  </li>
+                  <li>
+                    <strong>Breadth First Search (BFS):</strong> Linear (O(V +
+                    E))
+                  </li>
+                  <li>
+                    <strong>Dijkstra's Algorithm:</strong> Log-linear (O((V + E)
+                    log V)) with priority queue optimization
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
+        </div>
 
-          <!-- Choose algorithm type as the button layout-->
-          <form id="algorithm-selection-form">
-            {% csrf_token %} <!-- generates the token on server and adds to browser cookies -->
-            <label for="algorithm-selection-form" class="btn-label">Select Algorithm Type:</label>
-            {% for alg_type in algorithm_types %}
-              <button type="button" class="alg-button btn btn-outline-warning" id="{{alg_type}}" value="{{alg_type}}" onclick="handleAlgorithmTypeSelection(this)">
-                {{alg_type}}
-              </button>
-            {% endfor %}
-          </form> 
+        <p id="anal_description" style="display: none"></p>
 
+        <div class="back-button-container">
+          <button
+            type="button"
+            style="display: none"
+            class="btn btn-outline-warning"
+            id="return-button"
+            onclick="returnToSetup()"
+          >
+            Back
+          </button>
+        </div>
 
-          
+        <!-- Choose algorithm type as the button layout-->
+        <form id="algorithm-selection-form">
+          {% csrf_token %}
+          <!-- generates the token on server and adds to browser cookies -->
+          <label for="algorithm-selection-form" class="btn-label"
+            >Select Algorithm Type:</label
+          >
+          {% for alg_type in algorithm_types %}
+          <button
+            type="button"
+            class="alg-button btn btn-outline-warning"
+            id="{{alg_type}}"
+            value="{{alg_type}}"
+            onclick="handleAlgorithmTypeSelection(this)"
+          >
+            {{alg_type}}
+          </button>
+          {% endfor %}
+        </form>
 
+        <!-- Choose input type as the button layout -->
+        <form id="input-selection-form">
+          {% csrf_token %}
 
-          <!-- Choose input type as the button layout -->
-          <form id="input-selection-form">
-            {% csrf_token %}
+          <label for="input-selection-form" class="btn-label"
+            >Input Type:</label
+          >
 
-            <label for="input-selection-form" class="btn-label">Input Type:</label>
+          {% for input_type, values in input_types.items %}
+          <button
+            type="button"
+            class="input-button btn btn-outline-warning dimmed"
+            id="{{ input_type }}"
+            value="{{ input_type }}"
+            onclick="handleUnrestrictedInputTypeSelection(this)"
+            data-input-name="{{ values.0 }}"
+            data-n-max="{{ values.1 }}"
+            data-a-max="{{ values.2 }}"
+            data-n="{{ values.3 }}"
+            data-a="{{ values.4 }}"
+            disabled="true"
+          >
+            {{ input_type }}
+          </button>
+          {% endfor %}
+        </form>
+        <!-- input slider  -->
 
-            {% for input_type, values in input_types.items %}
-                <button type="button" class="input-button btn btn-outline-warning dimmed" 
-                        id="{{ input_type }}" 
-                        value="{{ input_type }}" 
-                        onclick="handleUnrestrictedInputTypeSelection(this)" 
-                        data-input-name="{{ values.0 }}" 
-                        data-n-max="{{ values.1 }}" 
-                        data-a-max="{{ values.2 }}"
-                        data-n="{{ values.3 }}" 
-                        data-a="{{ values.4 }}"
-                        disabled="true">
-                    {{ input_type }}
-                </button>
-            {% endfor %}
-          </form>
-                  <!-- input slider  -->
-          
-      
-          <!-- algorithm examples -->
-          <form id="algorithmForm">
-            <select id="algorithmSelect" disabled="true" class="dropdown-toggle" onchange="handleAlgorithmSelection(event)" name="algorithm" required>
-                <option value="">(Optional) Algorithm Examples</option>
-            </select>
-          </form>
-  
+        <!-- algorithm examples -->
+        <form id="algorithmForm">
+          <select
+            id="algorithmSelect"
+            disabled="true"
+            class="dropdown-toggle"
+            onchange="handleAlgorithmSelection(event)"
+            name="algorithm"
+            required
+          >
+            <option value="">(Optional) Algorithm Examples</option>
+          </select>
+        </form>
 
-          <div class="analyze-button-container">
-            <button type="submit" id="analyze-button" class="btn btn-outline-warning" onclick="handleCodeSubmission(event)">Analyze</button>
-          </div>          
-          
-
-        </div>  
+        <div class="analyze-button-container">
+          <button
+            type="submit"
+            id="analyze-button"
+            class="btn btn-outline-warning"
+            onclick="handleCodeSubmission(event)"
+          >
+            Analyze
+          </button>
+        </div>
       </div>
-    </main>
-    <footer class="mastfoot mt-auto">
-      <div class="inner">
-        <p>GitHub/LinkedIn: <a href="https://github.com/kyryl-lebedin">@kyryl-lebedin</a> </p>
-      </div>
-    </footer>
-</html>      
+    </div>
+  </main>
+  <footer class="mastfoot">
+    <div class="inner">
+      <p>
+        GitHub/LinkedIn:
+        <a href="https://github.com/kyryl-lebedin">@kyryl-lebedin</a>
+      </p>
+    </div>
+  </footer>
+</html>
