@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nurm+_ht==-$-a-&63smq=#(w^no!4+@=i9a%7jox&!9^7d^q_'
+SECRET_KEY = '$-a-&63smq=#(w^no!4+@=i9a%7jfasdfasdfasdfadsfada;dsfj;oijgiokpamkmvckn;jab;ouheoiufhoiwjlifajhldfjilauhluvuao8iroijrjkanvnurhgiutahdfkuyakduyfgauhldf;oija;oji;cnacvnhabysdbviybhbaliblkjsdbnvkj.n.abnsdnv.jandskbvabdiyvliauhdouvhjasdkjbvabndkvbhibabckvnmcnakuhrosfadoaxf&g!9a^sg7adsddagsagda^gddgsagsagq_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -120,6 +120,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+ALLOWED_HOSTS = ['*']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
