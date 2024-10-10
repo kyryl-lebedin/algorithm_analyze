@@ -107,21 +107,43 @@ def algorithm_analyze(func, input_type, n, a):
         smooth_sizes = np.linspace(min(sizes), max(sizes), 500)  # Smooth sizes from min to max size
         smooth_times = poly(smooth_sizes)  # Evaluate polynomial
 
-        plt.figure()
-        plt.plot(sizes, times, 'o', markersize=3, label='Original Data')  # Original data points
-        plt.plot(smooth_sizes, smooth_times, 'r-', label='Fitted Curve')  # Fitted curve
-        plt.xlabel('Size of List (n)')
-        plt.ylabel('Time (s)')
-        plt.title('Time Complexity')
-        plt.legend()
+       
+        plt.figure(facecolor='black', figsize=(8, 6))  # Set the background and size of the figure
+        ax = plt.gca()  # Get the current axes instance
+        ax.set_facecolor('white')  # Set the plot background to white
+
+        # Plot original data points
+        plt.plot(sizes, times, 'o', markersize=3, label='Original Data', color='blue')
+
+        # Plot fitted curve with red color
+        plt.plot(smooth_sizes, smooth_times, label='Fitted Curve', color="red", linewidth=2)
+
+        plt.xlabel('Size of List (n)', color='white')  # Change label text color to white
+        plt.ylabel('Time (s)', color='white')  # Change label text color to white
+        plt.title('Time Complexity', color='white')  # Change title text color to white
+
+        # Set the ticks color to white
+        ax.tick_params(axis='x', colors='white')
+        ax.tick_params(axis='y', colors='white')
+
+        # Customize legend text color and background
+        legend = plt.legend(facecolor='#888', frameon=True)
+        for text in legend.get_texts():
+            text.set_color('white')
+
+        # Adjust padding and margins
+        plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.1)  # Adds margins around the plot
+
+        plt.tight_layout(pad=2)  # Ensure padding around plot elements
 
         # Save the plot to a BytesIO stream
         buf = io.BytesIO()
-        plt.savefig(buf, format='png')
+        plt.savefig(buf, format='png', bbox_inches='tight')  # Save with tight bounding box
         plt.close()  # Close the figure to free memory
         buf.seek(0)  # Rewind your buffer
 
-        return buf, coefficients.tolist()  # Return the buffer and coefficients as a list
+        return buf, coefficients.tolist()  # Return the image buffer and the coefficients
+
     
 
 
