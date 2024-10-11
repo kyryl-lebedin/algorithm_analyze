@@ -21,10 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$-a-&63smq=#(w^no!4+@=i9a%7jfasdfasdfasdfadsfada;dsfj;oijgiokpamkmvckn;jab;ouheoiufhoiwjlifajhldfjilauhluvuao8iroijrjkanvnurhgiutahdfkuyakduyfgauhldf;oija;oji;cnacvnhabysdbviybhbaliblkjsdbnvkj.n.abnsdnv.jandskbvabdiyvliauhdouvhjasdkjbvabndkvbhibabckvnmcnakuhrosfadoaxf&g!9a^sg7adsddagsagda^gddgsagsagq_'
+SECRET_KEY = 'django-insecure-nurm+_ht==-$-a-&63smq=#(w^no!4+@=i9a%7jox&!9^7d^q_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -42,8 +42,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -121,22 +119,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-SECURE_HSTS_SECONDS = 31536000  # 1 year
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-SECURE_HSTS_PRELOAD = True
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-ALLOWED_HOSTS = ['*']
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
